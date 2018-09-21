@@ -41,7 +41,8 @@ def acquire_data(filename, model, maxim, index):
 ###
 #test_text = [' What is the full form of .com ? ', ' What does the abbreviation AIDS stand for ? ', " What does INRI stand for when used on Jesus ' cross ? "]
 
-test_text = sys.argv[1]
+test_text = [str(sys.argv[1])]
+print ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", test_text , " is ..."
 
 ## 
 data = []
@@ -63,6 +64,6 @@ lab_dict = {0: "Abbreviation" , 1: "Description" , 2: "Entity" , 3: "Human" , 4:
 
 prediction_labels = [lab_dict[i] for i in prediction_labels]
 
-print "Prediction:" , prediction_labels
+print ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", "Prediction:" , prediction_labels
 
 
