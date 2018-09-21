@@ -15,7 +15,7 @@ import numpy as np
 import gensim
 np.random.seed(2)
 maxim = 32
-model = gensim.models.KeyedVectors.load_word2vec_format('/home/prudhvi/MLSP/GoogleNews-vectors-negative300.bin', binary=True)  
+model = gensim.models.KeyedVectors.load_word2vec_format('GoogleNews-vectors-negative300.bin', binary=True)  
 #model = open('glove_100d_pickle.txt', 'r')
 #model = pickle.load(model)
 
@@ -141,20 +141,26 @@ output = Dense(6, activation= 'softmax')(dropout_2)
 model = Model(input= inputs, output= output)
 
 model.compile(optimizer= 'adam', loss='categorical_crossentropy', metrics= ['accuracy'])
+model.summary()
 model.fit(x_train, y_train, batch_size= 50, nb_epoch= int(epochs)) #validation_data = (x_test, y_test))
 model.save('word2vec_main_model_' + epochs +'.h5')
 
+
+def categorical_probas_to_classes(p):
+        return np.argmax(p, axis=1)
+
+    
 #from keras.models import load_model
 #model = load_model('500_filter_adam_50_50_valid_0.1.h5')
 #model = load_model(sys.argv[1])
 predictions = model.predict(x_test)
-predictions = np_utils.categorical_probas_to_classes(predictions)
-originals = np_utils.categorical_probas_to_classes(y_test)
+predictions = categorical_probas_to_classes(predictions)
+originals = categorical_probas_to_classes(y_test)
 
 lend = len(predictions) * 1.0
 print np.sum(predictions == originals)/lend
 
 from sklearn.metrics import confusion_matrix
 
-print confusion_matrix(originals, predictions) #labels = ['abbr', 'desc', 'enty', 'hum', 'loc', 'num'])
+print confusion_matrix(originals, predictions) # , labels = ['abbr', 'desc', 'enty', 'hum', 'loc', 'num'])
 

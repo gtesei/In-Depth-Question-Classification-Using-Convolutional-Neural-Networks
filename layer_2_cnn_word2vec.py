@@ -13,7 +13,7 @@ import numpy as np
 import gensim
 np.random.seed(2)
 maxim = 32
-model = gensim.models.KeyedVectors.load_word2vec_format('/home/prudhvi/MLSP/GoogleNews-vectors-negative300.bin', binary=True)  
+model = gensim.models.KeyedVectors.load_word2vec_format('GoogleNews-vectors-negative300.bin', binary=True)  
 
 #maxim = 36
 #model = gensim.models.KeyedVectors.load_word2vec_format('GoogleNews-vectors-negative300.bin', binary=True)  
@@ -145,7 +145,7 @@ output = Dense(len(files), activation= 'softmax')(dropout_2)
 model = Model(input= inputs, output= output)
 
 model.compile(optimizer= 'adam', loss='categorical_crossentropy', metrics= ['accuracy'])
-model.fit(x_train, y_train, batch_size= 50, nb_epoch= int(epochs)) #validation_data =(x_test, y_test))
+model.fit(x_train, y_train, batch_size= 50, nb_epoch= int(epochs) , validation_data =(x_test, y_test))
 
 model.save('word2vec_' + r + '_model_' +epochs+'.h5')
 
@@ -153,8 +153,8 @@ model.save('word2vec_' + r + '_model_' +epochs+'.h5')
 #model = load_model('model_sub_categ_desc_500_fil_pool_2_str_20_4_dropo_2.h5')
 #model = load_model(sys.argv[2])
 predictions = model.predict(x_test)
-predictions = np_utils.categorical_probas_to_classes(predictions)
-originals = np_utils.categorical_probas_to_classes(y_test)
+predictions = np_utils.to_categorical(predictions)
+originals = np_utils.to_categorical(y_test)
 lend = len(predictions) * 1.0
 print lend
 print np.sum(predictions == originals)
