@@ -9,6 +9,8 @@ import gensim
 
 from keras.models import Model, load_model
 
+import warnings
+
 np.random.seed(2)
 maxim = 32
 w2v = gensim.models.KeyedVectors.load_word2vec_format('GoogleNews-vectors-negative300.bin', binary=True)  
@@ -74,7 +76,9 @@ if __name__ == '__main__':
     #        break
     #    else:
     print ">>>>>>>>>>>>>", test_text , " is ..."
-    classify_question(test_text)
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore")
+        classify_question(test_text)
 
 
 
