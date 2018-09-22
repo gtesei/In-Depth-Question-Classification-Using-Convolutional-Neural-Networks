@@ -64,16 +64,17 @@ def classify_question(test_text):
 #test_text = [' What is the full form of .com ? ', ' What does the abbreviation AIDS stand for ? ', " What does INRI stand for when used on Jesus ' cross ? "]
 
 if __name__ == '__main__':
-    #test_text = [str(sys.argv[1])]
-    print ">>>>>>>>>>>>> Type EXIT to exit <<<<<<<<<<<<<<<<<"
-    for line in sys.stdin:
-        test_text = line.replace("\n","")
-        if line == "EXIT":
-            print("bye...")
-            break
-        else:
-            print ">>>>>>>>>>>>>", test_text , " is ..."
-            classify_question(test_text)
+    test_text = [str(sys.argv[1])]
+    #print ">>>>>>>>>>>>> Type EXIT to exit <<<<<<<<<<<<<<<<<"
+    #for line in sys.stdin:
+    #    #test_text = line.replace("\n","")
+    #    test_text = line 
+    #    if test_text == "EXIT":
+    #        print("bye...")
+    #        break
+    #    else:
+    print ">>>>>>>>>>>>>", test_text , " is ..."
+    classify_question(test_text)
 
 
 
