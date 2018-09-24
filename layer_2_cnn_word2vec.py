@@ -149,12 +149,15 @@ model.fit(x_train, y_train, batch_size= 50, nb_epoch= int(epochs) , validation_d
 
 model.save('word2vec_' + r + '_model_' +epochs+'.h5')
 
+def categorical_probas_to_classes(p):
+    return np.argmax(p, axis=1)
+
 #from keras.models import load_model
 #model = load_model('model_sub_categ_desc_500_fil_pool_2_str_20_4_dropo_2.h5')
 #model = load_model(sys.argv[2])
 predictions = model.predict(x_test)
-predictions = np_utils.to_categorical(predictions)
-originals = np_utils.to_categorical(y_test)
+predictions = categorical_probas_to_classes(predictions)
+originals = categorical_probas_to_classes(y_test)
 lend = len(predictions) * 1.0
 print lend
 print np.sum(predictions == originals)
