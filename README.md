@@ -1,6 +1,14 @@
-<p align = 'center'> <b>In-depth Question Classification using Convolutional Neural Networks <br>
-Prudhvi Raj Dachapally and Srikanth Ramanam <br>
-Code Execution Instructions <br></b></p>
+# [In-depth Question Classification using Convolutional Neural Networks](https://arxiv.org/abs/1804.00968v1)
+
+0. Docker 
+
+```sh
+docker run -it --name my_q_class gtesei/q_class:0.0.1
+cd /srv/ai/q_class/ 
+python pred_layer_1_cnn_word2vec.py "Who is Neo?"
+```
+
+# Code Execution Instructions 
 
 1. Data Separation
 
