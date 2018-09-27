@@ -1,8 +1,16 @@
-<p align = 'center'> <b>In-depth Question Classification using Convolutional Neural Networks <br>
-Prudhvi Raj Dachapally and Srikanth Ramanam <br>
-Code Execution Instructions <br></b></p>
+# [In-depth Question Classification using Convolutional Neural Networks](https://arxiv.org/abs/1804.00968v1)
 
-1. Data Separation
+## 0. Docker 
+
+```sh
+docker run -it --name my_q_class gtesei/q_class:0.0.1
+cd /srv/ai/q_class/ 
+python pred_layer_1_cnn_word2vec.py "Who is Neo?"
+```
+
+# Code Execution Instructions 
+
+## 1. Data Separation
 
 Before starting the training procedure, to make things easier, we first separate the data based on their classes. That is, the training folder contains 6 different text files for each broader class and each file has their own questions. For example, abbr.txt has questions about abbreviations, etc. 
 
@@ -35,7 +43,7 @@ This program again takes three arguments.
 	
 The above example groups the subclasses of abbreviation class into different files.
 
-2. Training the Convolution Neural Network.
+## 2. Training the Convolution Neural Network.
 
 Since we conducted three sets of experiments (including multi-channel), there would be two files for each word representation model. Execution instructions for word2vec model are given here, and these are same for GloVe and multi-channel model.
 
@@ -104,7 +112,7 @@ Secondary Categories:
 
 This above execution trains the CNN model on sub categories of location using pre-trained GloVe wiki  and GloVe twitter data trained representations for 10 epochs. This also saves the models and returns accuracies and confusion matrix.
 
-3. Testing Pre-Trained Models:
+## 3. Testing Pre-Trained Models:
 	
 	To download the pre-trained models, please go to this link. (Will be updated)
 	
@@ -130,5 +138,5 @@ This should return the prediction for each question along with the confidence va
 
 The above line executes the connected model code, which is generally an amalgamation of all the models positioned according to the prediction flow. This should return the predicted primary and secondary categories of each example along with a confidence value. At the end, this shows the total number of questions, number of correct predictions for primary categories, number of correct predictions of secondary categories, and a confusion matrix for the primary categories.
 
-4. If you want to test your models on the test sets, please used connected_model_test_2.py and change the names of the models in the program with your models. Running it is same as step 3.
+## 4. If you want to test your models on the test sets, please used connected_model_test_2.py and change the names of the models in the program with your models. Running it is same as step 3.
 
