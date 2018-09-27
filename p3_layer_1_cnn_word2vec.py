@@ -142,7 +142,7 @@ def build_2_model(input_shape=(32,300,1),
     r = Reshape((32,300))(inputs)
     x = Bidirectional(LSTM(150, return_sequences=True, dropout=0.2, recurrent_dropout=0.2,trainable=True))(r)
     #x = MaxPooling2D()(x)
-    x = GlobalMaxPool1D(data_format='channels_first')(x)
+    #x = GlobalMaxPool1D()(x)
     x = Reshape((1,1,-1))(x)
    
 
