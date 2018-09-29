@@ -188,7 +188,8 @@ def plot_learn_curve(history,do_plot=False):
                             index=epochs)
 
 
-def test_accuracy(x_test,
+def test_accuracy(model,
+                  x_test,
                   y_test,
                   test_questions,
                   map_label = {0:'Abbreviation', 1:'Description', 2:'Entity', 3:'Human', 4:'Location', 5:'Numeric'}, 

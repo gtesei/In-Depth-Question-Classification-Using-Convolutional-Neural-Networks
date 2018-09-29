@@ -53,7 +53,7 @@ learning_curve_df.to_csv(PREFIX+'learning_curve.csv')
 
 print(">> TEST ...")
 model = load_model(PREFIX+'model.h5')
-acc , error_df = test_accuracy(x_test,y_test,test_questions,map_label=map_label)
+acc , error_df = test_accuracy(model,x_test,y_test,test_questions,map_label=map_label)
 error_df.to_csv(PREFIX+'__val_acc_'+str(acc)+'__error_questions.csv')
 
 
