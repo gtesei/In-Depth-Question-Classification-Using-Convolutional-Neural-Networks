@@ -28,6 +28,9 @@ np.random.seed(2)
 maxim = 32
 word_embed_dim = 300
 N_EPOCHS = 200
+r = sys.argv[1]
+print("sys.argv[1]:",sys.argv[1])
+raise Exception("!!!!!")
 PREFIX = "word2vec_main_"
 
 print(">> loading GoogleNews-vectors-negative300.bin ...")
