@@ -78,14 +78,16 @@ def make_dataset(model_word_embed,
         train_questions.extend(questions)
         # test
         if sub_category=='':
-            filename = open(test_dir + files[f], 'r').read().splitlines()
+            filename = test_dir + files[f]
         else:
-            filename = open(test_dir + sub_category + '/' + files[f], 'r').read().splitlines()
-        loc_data, loc_targets, questions = acquire_data(filename, model_word_embed, maxim, f)
-        print("TEST :: ",files[f],loc_data.shape, loc_targets.shape , len(questions))                 
-        test_data.append(loc_data)
-        test_targets.append(loc_targets)
-        test_questions.extend(questions)
+            filename = test_dir + sub_category + '/' + files[f]
+        if os.path.exists(filename):
+            filename = open(filename).read().splitlines()            
+            loc_data, loc_targets, questions = acquire_data(filename, model_word_embed, maxim, f)
+            print("TEST :: ",files[f],loc_data.shape, loc_targets.shape , len(questions))                 
+            test_data.append(loc_data)
+            test_targets.append(loc_targets)
+            test_questions.extend(questions)
     x_train = np.vstack(np.array(train_data))
     y_train = np.hstack(np.array(train_targets))
     x_test = np.vstack(np.array(test_data))
@@ -98,8 +100,8 @@ def make_dataset(model_word_embed,
     assert x_test.shape[0] == len(test_questions)
     x_train = np.reshape(x_train, (x_train.shape[0], maxim, word_embed_dim, 1))
     x_test = np.reshape(x_test, (x_test.shape[0], maxim, word_embed_dim, 1))
-    y_train = np_utils.to_categorical(y_train)
-    y_test = np_utils.to_categorical(y_test)
+    y_train = np_utils.to_categorical(y_train,num_classes=len(files))
+    y_test = np_utils.to_categorical(y_test,num_classes=len(files))
     print("x_train:",x_train.shape," - y_train:",y_train.shape, "- train_questions:",len(train_questions))
     print("x_test:",x_test.shape," - y_test:",y_test.shape, "- test_questions:",len(test_questions))
     return x_train , y_train , x_test , y_test , train_questions , test_questions , map_label
