@@ -267,8 +267,9 @@ def build_model_tr_embed(MAX_SEQUENCE_LENGTH,
 
     sequence_input = Input(shape=(MAX_SEQUENCE_LENGTH,), dtype='int32')
     embedded_sequences = embedding_layer(sequence_input)
+    embedded_sequences_rh = Reshape((MAX_SEQUENCE_LENGTH,EMBEDDING_DIM,1))(embedded_sequences)
     # 2-gram
-    conv_1 = Conv2D(500, (2, EMBEDDING_DIM), activation="relu") (embedded_sequences)
+    conv_1 = Conv2D(500, (2, EMBEDDING_DIM), activation="relu") (embedded_sequences_rh)
     max_pool_1 = MaxPooling2D(pool_size=(30, 1 ))(conv_1)
     # 3-gram
     conv_2 = Conv2D(500, (3, EMBEDDING_DIM), activation="relu") (inputs)
