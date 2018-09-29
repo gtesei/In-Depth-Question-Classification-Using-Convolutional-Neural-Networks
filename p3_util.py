@@ -12,11 +12,16 @@ from keras.models import Model, load_model
 from keras.utils import np_utils
 from keras.models import Model
 from keras.layers import Conv2D, AveragePooling2D, MaxPooling2D, Activation, Flatten, Input, Dense, Dropout
+from keras.layers import Dense, Input, LSTM, Embedding, Dropout, Activation
 from keras.layers.merge import concatenate
 from keras.callbacks import EarlyStopping, ModelCheckpoint, ReduceLROnPlateau
-from keras.layers import LSTM, Bidirectional, GlobalMaxPool1D, Dropout, GRU
+from keras.preprocessing.sequence import pad_sequences
+from keras.preprocessing.text import text_to_word_sequence
 
-from keras.layers import Reshape
+from sklearn.preprocessing import LabelEncoder
+
+import re
+from keras.preprocessing.text import Tokenizer
 
 import warnings
 from operator import itemgetter 
@@ -44,6 +49,121 @@ def acquire_data(filename, model, maxim, index):
     loc_data = np.array(loc_data)
     loc_targets = [index] * len(filename)
     return loc_data, np.array(loc_targets) , questions
+
+def process_text(text):
+    text = re.sub(r"\'s", " is ", text) 
+    text = re.sub(r"\'s", " is ", text)
+    text = re.sub(r"\'ve", " have ", text)
+    return text
+
+
+
+def make_dataset_2_cat(model_word_embed, 
+                 EMBEDDING_DIM,
+                 MAX_SEQUENCE_LENGTH, 
+                 train_files = ['train_5500.txt'] , 
+                 test_files = ['test_data.txt' , 'quora_test_set.txt']):
+    
+    all_files = train_files + test_files
+    
+    train_main_cat_list = [] 
+    train_sub_cat_list = []
+    train_text_list = []
+    train_questions = []
+
+    test_main_cat_list = [] 
+    test_sub_cat_list = []
+    test_text_list = []
+    test_questions = []
+    
+    ##
+    for f in all_files: 
+        lines = open(f, 'r' , encoding = "ISO-8859-1").read().splitlines()
+        print(f," - size:",len(lines) , " - sample: ",lines[0])
+        for i in range(len(lines)):
+            tokens = lines[i].split()
+            m_cat, s_cat = tokens[0].split(":")
+            tokens.pop(0)
+            text = ' '.join(tokens)
+            if f in train_files:
+                train_main_cat_list.append(m_cat)
+                train_sub_cat_list.append(s_cat)
+                train_text_list.append(text_to_word_sequence(process_text(text),lower=False))
+                train_questions.append(lines[i])
+            elif m_cat in train_main_cat_list and s_cat in train_sub_cat_list: 
+                test_main_cat_list.append(m_cat)
+                test_sub_cat_list.append(s_cat)
+                test_text_list.append(text_to_word_sequence(process_text(text),lower=False))
+                test_questions.append(lines[i])
+            else:
+                print(">> removing: ",lines[i])
+            
+    assert len(train_main_cat_list) == len(train_sub_cat_list)
+    assert len(train_main_cat_list) == len(train_text_list)
+    assert len(train_main_cat_list) == len(train_questions)
+
+    assert len(test_main_cat_list) == len(test_sub_cat_list)
+    assert len(test_main_cat_list) == len(test_text_list)
+    assert len(test_main_cat_list) == len(test_questions)
+
+    print(">> train_size:",len(train_main_cat_list))
+    print(">> train sample:",train_main_cat_list[44] , train_sub_cat_list[44] , train_text_list[44] , train_questions[44])
+    print(">> test_size:",len(test_main_cat_list))
+    print(">> test sample:",test_main_cat_list[44] , test_sub_cat_list[44] , test_text_list[44] , test_questions[44])
+    
+    ##
+    tokenizer = Tokenizer(num_words=None,char_level=False,lower=False)
+    tokenizer.fit_on_texts(train_text_list + test_text_list) # + ... 
+    sequences_train = tokenizer.texts_to_sequences(train_text_list) # ... train , test .. 
+    sequences_test = tokenizer.texts_to_sequences(test_text_list) # ... train , test .. 
+    data_train = pad_sequences(sequences_train, maxlen=MAX_SEQUENCE_LENGTH)
+    data_test = pad_sequences(sequences_test, maxlen=MAX_SEQUENCE_LENGTH)
+    ##tokenizer.word_index
+    print(">> data_train:",data_train.shape)
+    print(">> train sample:",sequences_train[44] , data_train[44] , train_text_list[44] , train_questions[44])
+    print(">> data_test:",data_test.shape)
+    print(">> test sample:",sequences_test[44] , data_test[44] , test_text_list[44] , test_questions[44])
+    
+    #
+    nb_words = len(tokenizer.word_index)+1
+    embedding_matrix = np.zeros((nb_words, 300))
+    for word, i in tokenizer.word_index.items():
+        if word in model_word_embed.vocab:
+            #print('IN:',word)
+            embedding_matrix[i] = model_word_embed.word_vec(word)
+        else:
+            print('>>> OUT <<<:',word)
+    print('Null word embeddings: %d' % np.sum(np.sum(embedding_matrix, axis=1) == 0))
+    
+    #
+    label_encoder = LabelEncoder()
+    label_encoder.fit(train_main_cat_list+test_main_cat_list)
+    y_train_main_cat = label_encoder.transform(train_main_cat_list) 
+    y_test_main_cat = label_encoder.transform(test_main_cat_list) 
+    assert len(label_encoder.classes_) == len(set(train_main_cat_list))
+    
+    y_train_main_cat = np_utils.to_categorical(y_train_main_cat,num_classes=len(label_encoder.classes_))
+    y_test_main_cat = np_utils.to_categorical(y_test_main_cat,num_classes=len(label_encoder.classes_))
+    
+    map_label_main = dict(zip(label_encoder.classes_, range(len(label_encoder.classes_))))
+    
+    #
+    label_encoder = LabelEncoder()
+    label_encoder.fit(train_sub_cat_list+test_sub_cat_list)
+    y_train_sub_cat = label_encoder.transform(train_sub_cat_list) 
+    y_test_sub_cat = label_encoder.transform(test_sub_cat_list) 
+    
+    print(len(label_encoder.classes_),len(set(train_sub_cat_list)))
+    assert len(label_encoder.classes_) == len(set(train_sub_cat_list))
+    
+    y_train_sub_cat = np_utils.to_categorical(y_train_sub_cat,num_classes=len(label_encoder.classes_))
+    y_test_sub_cat = np_utils.to_categorical(y_test_sub_cat,num_classes=len(label_encoder.classes_))
+    
+    map_label_sub = dict(zip(label_encoder.classes_, range(len(label_encoder.classes_))))
+    
+    #
+    return data_train, y_train_main_cat, y_test_main_cat, data_test, y_train_sub_cat, y_test_sub_cat, embedding_matrix , train_questions, test_questions, map_label_main, map_label_sub    
+    
 
 def make_dataset(model_word_embed, 
                  word_embed_dim,
@@ -135,6 +255,41 @@ def build_model(input_shape=(32,300,1),
     output = Dense(n_classes, activation= 'softmax')(dropout_2)
     model = Model(inputs, output)
     return model 
+
+def build_model_tr_embed(MAX_SEQUENCE_LENGTH,
+                embedding_matrix, 
+                EMBEDDING_DIM, 
+                dropout_prob=0.5,
+                n_classes=6,
+                tr_embed=True):
+
+    embedding_layer = Embedding(embedding_matrix.shape[0],EMBEDDING_DIM,weights=[embedding_matrix],input_length=MAX_SEQUENCE_LENGTH,trainable=tr_embed)
+
+    sequence_input = Input(shape=(MAX_SEQUENCE_LENGTH,), dtype='int32')
+    embedded_sequences = embedding_layer(sequence_input)
+    # 2-gram
+    conv_1 = Conv2D(500, (2, EMBEDDING_DIM), activation="relu") (embedded_sequences)
+    max_pool_1 = MaxPooling2D(pool_size=(30, 1 ))(conv_1)
+    # 3-gram
+    conv_2 = Conv2D(500, (3, EMBEDDING_DIM), activation="relu") (inputs)
+    max_pool_2 = MaxPooling2D(pool_size=(29, 1 ))(conv_2)
+    # 4-gram
+    conv_3 = Conv2D(500, (4, EMBEDDING_DIM), activation="relu") (inputs)
+    max_pool_3 = MaxPooling2D(pool_size=(28, 1 ))(conv_3)
+    # 5-gram
+    conv_4 = Conv2D(500, (5, EMBEDDING_DIM), activation="relu") (inputs)
+    max_pool_4 = MaxPooling2D(pool_size=(27, 1))(conv_4)
+    # concat 
+    merged = concatenate([max_pool_1, max_pool_2, max_pool_3,max_pool_4])
+    flatten = Flatten()(merged)
+    # full-connect 
+    full_conn = Dense(128, activation= 'tanh')(flatten)
+    dropout_1 = Dropout(dropout_prob)(full_conn)
+    full_conn_2 = Dense(64, activation= 'tanh')(dropout_1)
+    dropout_2 = Dropout(dropout_prob)(full_conn_2)
+    output = Dense(n_classes, activation= 'softmax')(dropout_2)
+    model = Model(inputs, output)
+    return model
 
 def build_2_model(input_shape=(32,300,1),
                 dropout_prob=0.5,
