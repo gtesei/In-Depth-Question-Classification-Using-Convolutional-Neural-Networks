@@ -35,7 +35,7 @@ w2v = gensim.models.KeyedVectors.load_word2vec_format('GoogleNews-vectors-negati
 
 print(">> making dataset / building model...")
 x_train , y_train , x_test , y_test , train_questions , test_questions, map_label= make_dataset(w2v,word_embed_dim,maxim)
-model = build_2_model(input_shape=(32,300,1))
+model = build_model(input_shape=(32,300,1))
 model.compile(optimizer= 'adam', loss='categorical_crossentropy', metrics= ['accuracy'])
 model.summary()
 earlystopper = EarlyStopping(patience=20, verbose=1,monitor='val_acc',mode='max')
