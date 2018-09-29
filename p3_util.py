@@ -275,13 +275,13 @@ def build_model_tr_embed(MAX_SEQUENCE_LENGTH,
     conv_1 = Conv2D(500, (2, EMBEDDING_DIM), activation="relu") (embedded_sequences_rh)
     max_pool_1 = MaxPooling2D(pool_size=(30, 1 ))(conv_1)
     # 3-gram
-    conv_2 = Conv2D(500, (3, EMBEDDING_DIM), activation="relu") (inputs)
+    conv_2 = Conv2D(500, (3, EMBEDDING_DIM), activation="relu") (embedded_sequences_rh)
     max_pool_2 = MaxPooling2D(pool_size=(29, 1 ))(conv_2)
     # 4-gram
-    conv_3 = Conv2D(500, (4, EMBEDDING_DIM), activation="relu") (inputs)
+    conv_3 = Conv2D(500, (4, EMBEDDING_DIM), activation="relu") (embedded_sequences_rh)
     max_pool_3 = MaxPooling2D(pool_size=(28, 1 ))(conv_3)
     # 5-gram
-    conv_4 = Conv2D(500, (5, EMBEDDING_DIM), activation="relu") (inputs)
+    conv_4 = Conv2D(500, (5, EMBEDDING_DIM), activation="relu") (embedded_sequences_rh)
     max_pool_4 = MaxPooling2D(pool_size=(27, 1))(conv_4)
     # concat 
     merged = concatenate([max_pool_1, max_pool_2, max_pool_3,max_pool_4])
@@ -292,7 +292,7 @@ def build_model_tr_embed(MAX_SEQUENCE_LENGTH,
     full_conn_2 = Dense(64, activation= 'tanh')(dropout_1)
     dropout_2 = Dropout(dropout_prob)(full_conn_2)
     output = Dense(n_classes, activation= 'softmax')(dropout_2)
-    model = Model(inputs, output)
+    model = Model(sequence_input, output)
     return model
 
 def build_2_model(input_shape=(32,300,1),

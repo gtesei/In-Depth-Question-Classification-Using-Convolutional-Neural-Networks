@@ -51,7 +51,7 @@ reduce_lr = ReduceLROnPlateau(factor=0.2, patience=5, min_lr=0.00001, verbose=1,
 
 print(">> TRAINING ...")
 results = model.fit(data_train, y_train_main_cat,
-                    validation_data=[data_test,y_train_sub_cat],
+                    validation_data=[data_test,y_test_main_cat],
                     batch_size=50, epochs=N_EPOCHS,
                     callbacks=[earlystopper, checkpointer,reduce_lr])
 
