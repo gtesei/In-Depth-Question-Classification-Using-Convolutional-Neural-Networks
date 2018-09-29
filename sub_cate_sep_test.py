@@ -22,7 +22,7 @@ fi = sys.argv[1]
 #main_dir_1 = sys.argv[2]
 categ=  sys.argv[2]
 path = sys.argv[3]
-filename = open(fi, 'r').read().splitlines()
+filename = open(fi, 'r' , encoding = "ISO-8859-1").read().splitlines()
 
 import re
 

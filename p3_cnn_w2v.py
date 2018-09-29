@@ -28,10 +28,14 @@ if len(sys.argv) == 2:
     ## sub-category
     sub_category = sys.argv[1]
     PREFIX = "word2vec_"+sub_category+"_"
+    train_dir='sub_categories/'
+    test_dir='sub_categories_test/'
     print(">> sub-category:",sub_category)
 elif len(sys.argv) == 1:
     ## main category 
     sub_category = ''
+    train_dir='train_5500/'
+    test_dir='test_500/'
     PREFIX = "word2vec_main_"
     print(">> MAIN-category")
 else:
@@ -46,7 +50,7 @@ print(">> loading GoogleNews-vectors-negative300.bin ...")
 w2v = gensim.models.KeyedVectors.load_word2vec_format('GoogleNews-vectors-negative300.bin', binary=True)  
 
 print(">> making dataset / building model...")
-x_train , y_train , x_test , y_test , train_questions , test_questions, map_label= make_dataset(w2v,word_embed_dim,sub_category=sub_category)
+x_train , y_train , x_test , y_test , train_questions , test_questions, map_label= make_dataset(w2v,word_embed_dim,maxim,train_dir=train_dir,test_dir=test_dir,sub_category=sub_category)
 model = build_model(input_shape=(32,300,1))
 model.compile(optimizer= 'adam', loss='categorical_crossentropy', metrics= ['accuracy'])
 model.summary()

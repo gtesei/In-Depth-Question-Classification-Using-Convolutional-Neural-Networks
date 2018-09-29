@@ -66,15 +66,21 @@ def make_dataset(model_word_embed,
             map_label[f] = os.path.splitext(files[f])[0].upper()
         else:
             map_label[f] = sub_category.upper()+":"+os.path.splitext(files[f])[0]
-        # train 
-        filename = open(train_dir + sub_category + files[f], 'r' , encoding = "ISO-8859-1").read().splitlines()
+        # train
+        if sub_category=='':
+            filename = open(train_dir + files[f], 'r' , encoding = "ISO-8859-1").read().splitlines()
+        else:
+            filename = open(train_dir + sub_category + '/' + files[f], 'r' , encoding = "ISO-8859-1").read().splitlines()
         loc_data, loc_targets, questions = acquire_data(filename, model_word_embed, maxim, f)
         print("TRAIN :: ",files[f],loc_data.shape, loc_targets.shape , len(questions))           
         train_data.append(loc_data)
         train_targets.append(loc_targets)
         train_questions.extend(questions)
-        # test 
-        filename = open(test_dir + sub_category + files[f], 'r').read().splitlines()
+        # test
+        if sub_category=='':
+            filename = open(test_dir + files[f], 'r').read().splitlines()
+        else:
+            filename = open(test_dir + sub_category + '/' + files[f], 'r').read().splitlines()
         loc_data, loc_targets, questions = acquire_data(filename, model_word_embed, maxim, f)
         print("TEST :: ",files[f],loc_data.shape, loc_targets.shape , len(questions))                 
         test_data.append(loc_data)
