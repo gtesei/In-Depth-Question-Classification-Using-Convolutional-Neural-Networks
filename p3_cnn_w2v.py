@@ -24,20 +24,27 @@ from operator import itemgetter
 from p3_util import *
 
 ############# MAIN #############
+if len(sys.argv) == 2:
+	## sub-category 
+	sub_category = sys.argv[1]
+	PREFIX = "word2vec_"+sub_category+"_"
+elif len(sys.argv) == 1:
+	## main category 
+	sub_category = ''
+	PREFIX = "word2vec_main_"
+else:
+	raise Exception("See usage!!")
+
 np.random.seed(2)
 maxim = 32
 word_embed_dim = 300
 N_EPOCHS = 200
-r = sys.argv[1]
-print("sys.argv[1]:",sys.argv[1])
-raise Exception("!!!!!")
-PREFIX = "word2vec_main_"
 
 print(">> loading GoogleNews-vectors-negative300.bin ...")
 w2v = gensim.models.KeyedVectors.load_word2vec_format('GoogleNews-vectors-negative300.bin', binary=True)  
 
 print(">> making dataset / building model...")
-x_train , y_train , x_test , y_test , train_questions , test_questions, map_label= make_dataset(w2v,word_embed_dim,maxim)
+x_train , y_train , x_test , y_test , train_questions , test_questions, map_label= make_dataset(w2v,word_embed_dim,sub_category=sub_category)
 model = build_model(input_shape=(32,300,1))
 model.compile(optimizer= 'adam', loss='categorical_crossentropy', metrics= ['accuracy'])
 model.summary()
