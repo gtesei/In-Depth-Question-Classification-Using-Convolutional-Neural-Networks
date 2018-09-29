@@ -119,8 +119,8 @@ def make_dataset_2_cat(model_word_embed,
     tokenizer.fit_on_texts(train_text_list + test_text_list) # + ... 
     sequences_train = tokenizer.texts_to_sequences(train_text_list) # ... train , test .. 
     sequences_test = tokenizer.texts_to_sequences(test_text_list) # ... train , test .. 
-    data_train = pad_sequences(sequences_train, maxlen=MAX_SEQUENCE_LENGTH)
-    data_test = pad_sequences(sequences_test, maxlen=MAX_SEQUENCE_LENGTH)
+    data_train = pad_sequences(sequences_train, maxlen=MAX_SEQUENCE_LENGTH,padding='post')
+    data_test = pad_sequences(sequences_test, maxlen=MAX_SEQUENCE_LENGTH,padding='post')
     ##tokenizer.word_index
     print(">> data_train:",data_train.shape)
     print(">> train sample:",sequences_train[44] , data_train[44] , train_text_list[44] , train_questions[44])

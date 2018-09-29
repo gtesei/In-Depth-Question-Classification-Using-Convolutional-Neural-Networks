@@ -42,7 +42,7 @@ w2v = gensim.models.KeyedVectors.load_word2vec_format('GoogleNews-vectors-negati
 
 print(">> making dataset / building model...")
 data_train, y_train_main_cat, y_test_main_cat, data_test, y_train_sub_cat, y_test_sub_cat, embedding_matrix , train_questions, test_questions, map_label_main, map_label_sub =make_dataset_2_cat(w2v,EMBEDDING_DIM, MAX_SEQUENCE_LENGTH, train_files = ['train_5500.txt'] , test_files = ['test_data.txt' , 'quora_test_set.txt'])
-model = build_model_tr_embed(MAX_SEQUENCE_LENGTH,embedding_matrix, EMBEDDING_DIM, dropout_prob=0.5,n_classes=len(map_label_main),tr_embed=True)
+model = build_model_tr_embed(MAX_SEQUENCE_LENGTH,embedding_matrix, EMBEDDING_DIM, dropout_prob=0.5,n_classes=len(map_label_main),tr_embed=False)
 model.compile(optimizer= 'adam', loss='categorical_crossentropy', metrics= ['accuracy'])
 model.summary()
 earlystopper = EarlyStopping(patience=20, verbose=1,monitor='val_acc',mode='max')
