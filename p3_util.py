@@ -20,6 +20,9 @@ from keras.preprocessing.text import text_to_word_sequence
 
 from sklearn.preprocessing import LabelEncoder
 
+from keras.layers import Reshape
+
+
 import re
 from keras.preprocessing.text import Tokenizer
 
