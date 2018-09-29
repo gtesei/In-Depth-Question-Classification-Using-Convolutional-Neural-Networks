@@ -85,7 +85,8 @@ def make_dataset_2_cat(model_word_embed,
         print(f," - size:",len(lines) , " - sample: ",lines[0])
         for i in range(len(lines)):
             tokens = lines[i].split()
-            m_cat, s_cat = tokens[0].split(":")
+            m_cat, _ = tokens[0].split(":")
+            s_cat = tokens[0]
             tokens.pop(0)
             text = ' '.join(tokens)
             if f in train_files:
@@ -108,6 +109,12 @@ def make_dataset_2_cat(model_word_embed,
     assert len(test_main_cat_list) == len(test_sub_cat_list)
     assert len(test_main_cat_list) == len(test_text_list)
     assert len(test_main_cat_list) == len(test_questions)
+
+    print(" Train - MAIN Categories:",len(set(train_main_cat_list))," - ",set(train_main_cat_list))
+    print(" Train - Sub Categories:",len(set(train_main_cat_list))," - (10)",set(train_main_cat_list)[:10])
+
+    print(" Test - MAIN Categories:",len(set(test_main_cat_list))," - ",set(test_main_cat_list))
+    print(" Test - Sub Categories:",len(set(test_main_cat_list))," - (10)",set(test_main_cat_list)[:10])
 
     print(">> train_size:",len(train_main_cat_list))
     print(">> train sample:",train_main_cat_list[44] , train_sub_cat_list[44] , train_text_list[44] , train_questions[44])
