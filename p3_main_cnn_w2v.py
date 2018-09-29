@@ -41,7 +41,7 @@ print(">> loading GoogleNews-vectors-negative300.bin ...")
 w2v = gensim.models.KeyedVectors.load_word2vec_format('GoogleNews-vectors-negative300.bin', binary=True)  
 
 print(">> making dataset / building model...")
-data_train, y_train_main_cat, y_test_main_cat, data_test, y_train_sub_cat, y_test_sub_cat, embedding_matrix , train_questions, test_questions, map_label_main, map_label_sub =make_dataset_2_cat(w2v,EMBEDDING_DIM, MAX_SEQUENCE_LENGTH, train_files = ['train_5500.txt'] , test_files = ['test_data.txt' , 'quora_test_set.txt'])
+data_train, y_train_main_cat, y_test_main_cat, data_test, y_train_sub_cat, y_test_sub_cat, embedding_matrix , train_questions, test_questions, map_label_main, map_label_sub =make_dataset_2_cat(w2v,EMBEDDING_DIM, MAX_SEQUENCE_LENGTH, train_files = ['train_5500.txt'] , test_files = ['test_data.txt']) # , 'quora_test_set.txt'])
 model = build_model_tr_embed(MAX_SEQUENCE_LENGTH,embedding_matrix, EMBEDDING_DIM, dropout_prob=0.5,n_classes=len(map_label_main),tr_embed=False)
 model.compile(optimizer= 'adam', loss='categorical_crossentropy', metrics= ['accuracy'])
 model.summary()
@@ -60,7 +60,7 @@ learning_curve_df.to_csv(PREFIX+'learning_curve.csv')
 
 print(">> TEST ...")
 model = load_model(PREFIX+'model.h5')
-acc , error_df = test_accuracy(model,x_test,y_test,test_questions,map_label=map_label)
+acc , error_df = test_accuracy(model,data_test,y_test_main_cat,test_questions,map_label=map_label_main)
 error_df.to_csv(PREFIX+'__val_acc_'+str(acc)+'__error_questions.csv')
 
 

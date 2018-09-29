@@ -149,6 +149,8 @@ def make_dataset_2_cat(model_word_embed,
     y_test_main_cat = np_utils.to_categorical(y_test_main_cat,num_classes=len(label_encoder.classes_))
     
     map_label_main = dict(zip(label_encoder.classes_, range(len(label_encoder.classes_))))
+    map_label_main = {v: k for k, v in map_label_main.items()}
+    print("map_label_main::",map_label_main)
     
     #
     label_encoder = LabelEncoder()
@@ -163,7 +165,8 @@ def make_dataset_2_cat(model_word_embed,
     y_test_sub_cat = np_utils.to_categorical(y_test_sub_cat,num_classes=len(label_encoder.classes_))
     
     map_label_sub = dict(zip(label_encoder.classes_, range(len(label_encoder.classes_))))
-    
+    map_label_sub = {v: k for k, v in map_label_sub.items()}
+    print("map_label_sub::",map_label_sub)
     #
     return data_train, y_train_main_cat, y_test_main_cat, data_test, y_train_sub_cat, y_test_sub_cat, embedding_matrix , train_questions, test_questions, map_label_main, map_label_sub    
     
