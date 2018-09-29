@@ -1,5 +1,5 @@
 import sys
-import pickle
+0;136;0cimport pickle
 import os
 
 import numpy as np
@@ -25,13 +25,15 @@ from p3_util import *
 
 ############# MAIN #############
 if len(sys.argv) == 2:
-	## sub-category 
+	## sub-category
 	sub_category = sys.argv[1]
 	PREFIX = "word2vec_"+sub_category+"_"
+        print(">> sub-category:",sub_category)
 elif len(sys.argv) == 1:
 	## main category 
 	sub_category = ''
 	PREFIX = "word2vec_main_"
+        print(">> MAIN-category")
 else:
 	raise Exception("See usage!!")
 
