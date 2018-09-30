@@ -111,10 +111,10 @@ def make_dataset_2_cat(model_word_embed,
     assert len(test_main_cat_list) == len(test_questions)
 
     print(" Train - MAIN Categories:",len(set(train_main_cat_list))," - ",set(train_main_cat_list))
-    print(" Train - Sub Categories:",len(set(train_main_cat_list))," - (10)",set(train_main_cat_list)[:10])
+    print(" Train - Sub Categories:",len(set(train_sub_cat_list))," - ",set(train_sub_cat_list))
 
     print(" Test - MAIN Categories:",len(set(test_main_cat_list))," - ",set(test_main_cat_list))
-    print(" Test - Sub Categories:",len(set(test_main_cat_list))," - (10)",set(test_main_cat_list)[:10])
+    print(" Test - Sub Categories:",len(set(test_sub_cat_list))," - ",set(test_sub_cat_list))
 
     print(">> train_size:",len(train_main_cat_list))
     print(">> train sample:",train_main_cat_list[44] , train_sub_cat_list[44] , train_text_list[44] , train_questions[44])
