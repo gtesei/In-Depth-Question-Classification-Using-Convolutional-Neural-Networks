@@ -30,7 +30,7 @@ import os
 from p3_util import *
 
 ############# MAIN #############
-if len(sys.argv) == 1:
+if len(sys.argv) == 2:
 	if sys.argv[1] == "main":
 		PREFIX = "word2vec_main_"
 		print(">> MAIN-category")
