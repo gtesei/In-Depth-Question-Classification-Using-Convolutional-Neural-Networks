@@ -40,7 +40,7 @@ if len(sys.argv) == 2:
 		print(">> Sub-category")
 		IS_MAIN_CAT = False  
 	else:
-		Exception("Usage: "+str(os.path.basename(__file__))+" main|sub")
+	        raise Exception("Usage: "+str(os.path.basename(__file__))+" main|sub")
 else:
     raise Exception("Usage: "+str(os.path.basename(__file__))+" main|sub")
 
@@ -55,12 +55,6 @@ w2v = gensim.models.KeyedVectors.load_word2vec_format('GoogleNews-vectors-negati
 
 print(">> making dataset / building model...")
 data_train, y_train_main_cat, y_test_main_cat, data_test, y_train_sub_cat, y_test_sub_cat, embedding_matrix , train_questions, test_questions, map_label_main, map_label_sub =make_dataset_2_cat(w2v,EMBEDDING_DIM, MAX_SEQUENCE_LENGTH, train_files = ['train_5500.txt'] , test_files = ['test_data.txt']) # , 'quora_test_set.txt'])
-model = build_model_tr_embed(MAX_SEQUENCE_LENGTH,embedding_matrix, EMBEDDING_DIM, dropout_prob=0.5,n_classes=len(map_label_main),tr_embed=False)
-model.compile(optimizer= 'adam', loss='categorical_crossentropy', metrics= ['accuracy'])
-model.summary()
-earlystopper = EarlyStopping(patience=20, verbose=1,monitor='val_acc',mode='max')
-checkpointer = ModelCheckpoint(PREFIX+'model.h5', verbose=1, save_best_only=True,monitor='val_acc',mode='max')
-reduce_lr = ReduceLROnPlateau(factor=0.2, patience=5, min_lr=0.00001, verbose=1,monitor='val_acc',mode='max')
 
 if IS_MAIN_CAT:
 	labels_train = y_train_main_cat
@@ -70,6 +64,13 @@ else:
 	labels_train = y_train_sub_cat
 	labels_test = y_test_sub_cat
 	_map_label = map_label_sub
+
+model = build_model_tr_embed(MAX_SEQUENCE_LENGTH,embedding_matrix, EMBEDDING_DIM, dropout_prob=0.5,n_classes=len(_map_label),tr_embed=False)
+model.compile(optimizer= 'adam', loss='categorical_crossentropy', metrics= ['accuracy'])
+model.summary()
+earlystopper = EarlyStopping(patience=20, verbose=1,monitor='val_acc',mode='max')
+checkpointer = ModelCheckpoint(PREFIX+'model.h5', verbose=1, save_best_only=True,monitor='val_acc',mode='max')
+reduce_lr = ReduceLROnPlateau(factor=0.2, patience=5, min_lr=0.00001, verbose=1,monitor='val_acc',mode='max')
 
 print(">> TRAINING ...")
 results = model.fit(data_train, labels_train,
