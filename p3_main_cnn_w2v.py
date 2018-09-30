@@ -25,17 +25,30 @@ from keras.preprocessing.text import Tokenizer
 
 import warnings
 from operator import itemgetter 
+import os
 
 from p3_util import *
 
 ############# MAIN #############
+if len(sys.argv) == 1:
+	if sys.argv[1] == "main":
+		PREFIX = "word2vec_main_"
+		print(">> MAIN-category")
+		IS_MAIN_CAT = True 
+	elif sys.argv[1] == "sub":
+		PREFIX = "word2vec_flat_"
+		print(">> Sub-category")
+		IS_MAIN_CAT = False  
+	else:
+		Exception("Usage: "+str(os.path.basename(__file__))+" main|sub")
+else:
+    raise Exception("Usage: "+str(os.path.basename(__file__))+" main|sub")
 
 np.random.seed(2)
 MAX_SEQUENCE_LENGTH = 32
 EMBEDDING_DIM = 300
 N_EPOCHS = 200
-PREFIX = "word2vec_main_"
-print(">> MAIN-category")
+
 
 print(">> loading GoogleNews-vectors-negative300.bin ...")
 w2v = gensim.models.KeyedVectors.load_word2vec_format('GoogleNews-vectors-negative300.bin', binary=True)  
@@ -49,9 +62,18 @@ earlystopper = EarlyStopping(patience=20, verbose=1,monitor='val_acc',mode='max'
 checkpointer = ModelCheckpoint(PREFIX+'model.h5', verbose=1, save_best_only=True,monitor='val_acc',mode='max')
 reduce_lr = ReduceLROnPlateau(factor=0.2, patience=5, min_lr=0.00001, verbose=1,monitor='val_acc',mode='max')
 
+if IS_MAIN_CAT:
+	labels_train = y_train_main_cat
+	labels_test = y_test_main_cat
+	_map_label = map_label_main
+else:
+	labels_train = y_train_sub_cat
+	labels_test = y_test_sub_cat
+	_map_label = map_label_sub
+
 print(">> TRAINING ...")
-results = model.fit(data_train, y_train_main_cat,
-                    validation_data=[data_test,y_test_main_cat],
+results = model.fit(data_train, labels_train,
+                    validation_data=[data_test,labels_test],
                     batch_size=50, epochs=N_EPOCHS,
                     callbacks=[earlystopper, checkpointer,reduce_lr])
 
@@ -60,7 +82,7 @@ learning_curve_df.to_csv(PREFIX+'learning_curve.csv')
 
 print(">> TEST ...")
 model = load_model(PREFIX+'model.h5')
-acc , error_df = test_accuracy(model,data_test,y_test_main_cat,test_questions,map_label=map_label_main)
+acc , error_df = test_accuracy(model,data_test,labels_test,test_questions,map_label=_map_label)
 error_df.to_csv(PREFIX+'__val_acc_'+str(acc)+'__error_questions.csv')
 
 
