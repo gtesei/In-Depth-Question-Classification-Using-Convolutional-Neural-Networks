@@ -305,6 +305,64 @@ def build_model_tr_embed(MAX_SEQUENCE_LENGTH,
     model = Model(sequence_input, output)
     return model
 
+
+def build_model_tr_embed_2_output(MAX_SEQUENCE_LENGTH,
+                embedding_matrix, 
+                EMBEDDING_DIM, 
+                dropout_prob=0.5,
+                n_classes_main=6,
+                n_classes_sub=0,
+                tr_embed=True):
+
+    embedding_layer = Embedding(embedding_matrix.shape[0],EMBEDDING_DIM,weights=[embedding_matrix],input_length=MAX_SEQUENCE_LENGTH,trainable=tr_embed)
+
+    sequence_input = Input(shape=(MAX_SEQUENCE_LENGTH,), dtype='int32')
+    embedded_sequences = embedding_layer(sequence_input)
+    embedded_sequences_rh = Reshape((MAX_SEQUENCE_LENGTH,EMBEDDING_DIM,1))(embedded_sequences)
+
+    ### -------------------------- MAIN CAT  
+    # 2-gram
+    conv_1 = Conv2D(500, (2, EMBEDDING_DIM), activation="relu") (embedded_sequences_rh)
+    max_pool_1 = MaxPooling2D(pool_size=(30, 1 ))(conv_1)
+    # 3-gram
+    conv_2 = Conv2D(500, (3, EMBEDDING_DIM), activation="relu") (embedded_sequences_rh)
+    max_pool_2 = MaxPooling2D(pool_size=(29, 1 ))(conv_2)
+    # 4-gram
+    conv_3 = Conv2D(500, (4, EMBEDDING_DIM), activation="relu") (embedded_sequences_rh)
+    max_pool_3 = MaxPooling2D(pool_size=(28, 1 ))(conv_3)
+    # 5-gram
+    conv_4 = Conv2D(500, (5, EMBEDDING_DIM), activation="relu") (embedded_sequences_rh)
+    max_pool_4 = MaxPooling2D(pool_size=(27, 1))(conv_4)
+    
+    # concat 
+    merged = concatenate([max_pool_1, max_pool_2, max_pool_3,max_pool_4])
+    flatten = Flatten()(merged)
+    
+    # full-connect -- MAIN  
+    full_conn = Dense(128, activation= 'tanh')(flatten)
+    dropout_1 = Dropout(dropout_prob)(full_conn)
+    full_conn_2 = Dense(64, activation= 'tanh')(dropout_1)
+    dropout_2 = Dropout(dropout_prob)(full_conn_2)
+    output = Dense(n_classes_main, activation= 'softmax')(dropout_2)    
+
+    o2 = Reshape((1,1,6))(output)
+    
+    # concat 2  
+    merged_2 = concatenate([max_pool_1, max_pool_2, max_pool_3,max_pool_4,o2])
+    flatten_2 = Flatten()(merged_2)
+
+    # full-connect -- sub
+    full_conn_sub = Dense(128, activation= 'tanh')(flatten_2)
+    dropout_1_sub = Dropout(dropout_prob)(full_conn_sub)
+    full_conn_2_sub = Dense(64, activation= 'tanh')(dropout_1_sub)
+    dropout_2_sub = Dropout(dropout_prob)(full_conn_2_sub)
+    output_sub = Dense(n_classes_sub, activation= 'softmax')(dropout_2_sub)
+    
+    model = Model(sequence_input, [output,output_sub])
+    return model
+
+
+
 def build_2_model(input_shape=(32,300,1),
                 dropout_prob=0.5,
                 n_classes=6):
