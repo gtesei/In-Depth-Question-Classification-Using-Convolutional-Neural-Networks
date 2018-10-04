@@ -30,7 +30,8 @@ import os
 from p3_util import *
 
 ############# MAIN #############
-PREFIX = "word2vec_double_"
+os.makedirs(os.path.dirname('results/double/a.csv'))
+PREFIX = "results/double/word2vec_double_"
 print(">> Double")
 
 np.random.seed(2)
@@ -46,11 +47,11 @@ print(">> making dataset / building model...")
 data_train, y_train_main_cat, y_test_main_cat, data_test, y_train_sub_cat, y_test_sub_cat, embedding_matrix , train_questions, test_questions, map_label_main, map_label_sub =make_dataset_2_cat(w2v,EMBEDDING_DIM, MAX_SEQUENCE_LENGTH, train_files = ['train_5500.txt'] , test_files = ['test_data.txt']) # , 'quora_test_set.txt'])
 
 model = build_model_tr_embed_2_output(MAX_SEQUENCE_LENGTH,embedding_matrix, EMBEDDING_DIM, dropout_prob=0.5,n_classes_main=len(map_label_main),n_classes_sub=len(map_label_sub),tr_embed=False)
-model.compile(optimizer= 'adam', loss='categorical_crossentropy', metrics= ['accuracy'],loss_weights=[1., 1.])
+model.compile(optimizer= 'adam', loss='categorical_crossentropy', metrics= ['accuracy'],loss_weights=[0.5, 0.5])
 model.summary()
-earlystopper = EarlyStopping(patience=20, verbose=1,monitor='val_acc',mode='max')
-checkpointer = ModelCheckpoint(PREFIX+'model.h5', verbose=1, save_best_only=True,monitor='val_acc',mode='max')
-reduce_lr = ReduceLROnPlateau(factor=0.2, patience=5, min_lr=0.00001, verbose=1,monitor='val_acc',mode='max')
+earlystopper = EarlyStopping(patience=20, verbose=1,monitor='val_dense_6_acc',mode='max')
+checkpointer = ModelCheckpoint(PREFIX+'model.h5', verbose=1, save_best_only=True,monitor='val_dense_6_acc',mode='max')
+reduce_lr = ReduceLROnPlateau(factor=0.2, patience=5, min_lr=0.00001, verbose=1,monitor='val_dense_6_acc',mode='max')
 
 print(">> TRAINING ...")
 results = model.fit(data_train, [y_train_main_cat,y_train_sub_cat],
@@ -58,13 +59,13 @@ results = model.fit(data_train, [y_train_main_cat,y_train_sub_cat],
                     batch_size=50, epochs=N_EPOCHS,
                     callbacks=[earlystopper, checkpointer,reduce_lr])
 
-# learning_curve_df = plot_learn_curve(results,do_plot=False)
-# learning_curve_df.to_csv(PREFIX+'learning_curve.csv')
+learning_curve_df = plot_learn_curve(results,do_plot=False)
+learning_curve_df.to_csv(PREFIX+'learning_curve.csv')
 
-# print(">> TEST ...")
-# model = load_model(PREFIX+'model.h5')
-# acc , error_df = test_accuracy(model,data_test,labels_test,test_questions,map_label=_map_label)
-# error_df.to_csv(PREFIX+'__val_acc_'+str(acc)+'__error_questions.csv')
+print(">> TEST ...")
+model = load_model(PREFIX+'model.h5')
+acc , error_df = test_accuracy(model,data_test,y_test_sub_cat,test_questions,map_label=map_label_sub)
+error_df.to_csv(PREFIX+'__val_acc_'+str(acc)+'__error_questions.csv')
 
 
 
