@@ -456,3 +456,40 @@ def test_accuracy(model,
         err_dict[str("prob_"+ map_label[lab])] = probs
     error_df = pd.DataFrame(err_dict)
     return acc , error_df
+
+def test_accuracy2(model,
+                  x_test,
+                  y_test,
+                  test_questions,
+                  map_label = {0:'Abbreviation', 1:'Description', 2:'Entity', 3:'Human', 4:'Location', 5:'Numeric'}, 
+                  do_print=True ):
+    if len(map_label) < 10:
+        _predictions = model.predict(x_test)[0] ## <<< main
+    else:
+        _predictions = model.predict(x_test)[1] ## <<< sub category 
+    _n_labels = _predictions.shape[1]
+    predictions = categorical_probas_to_classes(_predictions)
+    originals = categorical_probas_to_classes(y_test)
+    lend = len(predictions) * 1.0
+    acc = np.sum(predictions == originals)/lend
+    if do_print:
+        print("Test Accuracy:",acc)
+        print(confusion_matrix(originals, predictions)) 
+    #err_questions = list(itemgetter(*np.where(predictions != originals)[0].tolist())(test_questions))
+    err_list = [] 
+    pred_list = [] 
+    truth_list = [] 
+    for i in range(len(x_test)):
+        if originals[i] != predictions[i]:
+            err_list.append(test_questions[i])
+            pred_list.append(map_label[predictions[i]])
+            truth_list.append(map_label[originals[i]])
+    err_dict = {'question': err_list , 'prediction': pred_list , 'truth': truth_list}
+    for lab in range(_n_labels):
+        probs = [] 
+        for i in range(len(x_test)):
+            if originals[i] != predictions[i]:
+                probs.append(_predictions[i][lab])
+        err_dict[str("prob_"+ map_label[lab])] = probs
+    error_df = pd.DataFrame(err_dict)
+    return acc , error_df

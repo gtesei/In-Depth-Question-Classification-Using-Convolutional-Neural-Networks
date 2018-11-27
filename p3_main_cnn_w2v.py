@@ -32,12 +32,12 @@ from p3_util import *
 ############# MAIN #############
 if len(sys.argv) == 2:
 	if sys.argv[1] == "main":
-                os.makedirs(os.path.dirname('results/main_word2vec/a.csv'))
+                #os.makedirs(os.path.dirname('results/main_word2vec/a.csv'))
                 PREFIX = "results/main_word2vec/word2vec_main_"
                 print(">> MAIN-category")
                 IS_MAIN_CAT = True 
 	elif sys.argv[1] == "sub":
-                os.makedirs(os.path.dirname('results/flat_word2vec/a.csv'))
+                #os.makedirs(os.path.dirname('results/flat_word2vec/a.csv'))
                 PREFIX = "results/flat_word2vec/word2vec_flat_"
                 print(">> Sub-category")
                 IS_MAIN_CAT = False  
