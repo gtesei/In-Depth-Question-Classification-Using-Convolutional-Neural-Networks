@@ -441,7 +441,7 @@ def build_model_tr_embed_2_output(MAX_SEQUENCE_LENGTH,
     return model
 
 
-    def build_model_attention1_2_output(MAX_SEQUENCE_LENGTH,
+def build_model_attention1_2_output(MAX_SEQUENCE_LENGTH,
                 embedding_matrix, 
                 EMBEDDING_DIM, 
                 dropout_prob=0.5,
