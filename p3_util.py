@@ -65,7 +65,8 @@ def make_dataset_2_cat(model_word_embed,
                  EMBEDDING_DIM,
                  MAX_SEQUENCE_LENGTH, 
                  train_files = ['train_5500.txt'] , 
-                 test_files = ['test_data.txt' , 'quora_test_set.txt']):
+                 test_files = ['test_data.txt' , 'quora_test_set.txt'],
+                 lower=False):
     
     all_files = train_files + test_files
     
@@ -92,12 +93,12 @@ def make_dataset_2_cat(model_word_embed,
             if f in train_files:
                 train_main_cat_list.append(m_cat)
                 train_sub_cat_list.append(s_cat)
-                train_text_list.append(text_to_word_sequence(process_text(text),lower=False))
+                train_text_list.append(text_to_word_sequence(process_text(text),lower=lower))
                 train_questions.append(lines[i])
             elif m_cat in train_main_cat_list and s_cat in train_sub_cat_list: 
                 test_main_cat_list.append(m_cat)
                 test_sub_cat_list.append(s_cat)
-                test_text_list.append(text_to_word_sequence(process_text(text),lower=False))
+                test_text_list.append(text_to_word_sequence(process_text(text),lower=lower))
                 test_questions.append(lines[i])
             else:
                 print(">> removing: ",lines[i])
@@ -348,7 +349,7 @@ def build_model_tr_embed_2_output(MAX_SEQUENCE_LENGTH,
     o2 = Reshape((1,1,6))(output)
     
     # concat 2  
-    merged_2 = concatenate([max_pool_1, max_pool_2, max_pool_3,max_pool_4,o2])
+    merged_2 = concatenate([max_pool_1, max_pool_2, max_pool_3,max_pool_4])
     flatten_2 = Flatten()(merged_2)
 
     # full-connect -- sub

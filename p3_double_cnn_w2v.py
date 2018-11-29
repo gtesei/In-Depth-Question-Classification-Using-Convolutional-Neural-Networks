@@ -39,14 +39,14 @@ MAX_SEQUENCE_LENGTH = 32
 EMBEDDING_DIM = 300
 N_EPOCHS = 200
 REPEAT = 10 
-FILE_OUT = "baseline_results.txt"
+FILE_OUT = "lower_results.txt"
 
 print(">> loading GoogleNews-vectors-negative300-hard-debiased.bin ...")
-w2v = gensim.models.KeyedVectors.load_word2vec_format('GoogleNews-vectors-negative300.bin', binary=True)  
-#w2v = gensim.models.KeyedVectors.load_word2vec_format('GoogleNews-vectors-negative300-hard-debiased.bin', binary=True)  
+#w2v = gensim.models.KeyedVectors.load_word2vec_format('GoogleNews-vectors-negative300.bin', binary=True)  
+w2v = gensim.models.KeyedVectors.load_word2vec_format('GoogleNews-vectors-negative300-hard-debiased.bin', binary=True)  
 
 print(">> making dataset / building model...")
-data_train, y_train_main_cat, y_test_main_cat, data_test, y_train_sub_cat, y_test_sub_cat, embedding_matrix , train_questions, test_questions, map_label_main, map_label_sub =make_dataset_2_cat(w2v,EMBEDDING_DIM, MAX_SEQUENCE_LENGTH, train_files = ['train_5500.txt'] , test_files = ['test_data.txt']) # , 'quora_test_set.txt'])
+data_train, y_train_main_cat, y_test_main_cat, data_test, y_train_sub_cat, y_test_sub_cat, embedding_matrix , train_questions, test_questions, map_label_main, map_label_sub =make_dataset_2_cat(w2v,EMBEDDING_DIM, MAX_SEQUENCE_LENGTH, train_files = ['train_5500.txt'] , test_files = ['test_data.txt'],lower=False) # , 'quora_test_set.txt'])
 
 acc_mains , acc_subs = [] ,[]
 for i in range(REPEAT):
