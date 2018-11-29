@@ -453,20 +453,24 @@ def build_model_attention1_2_output(MAX_SEQUENCE_LENGTH,
 
     sequence_input = Input(shape=(MAX_SEQUENCE_LENGTH,), dtype='int32')
     embedded_sequences = embedding_layer(sequence_input)
+    spac_drop = SpatialDropout1D(0.1)(embedded_sequences)
 
-    biLSTM_1 = Bidirectional(CuDNNLSTM(64, return_sequences=True))(embedded_sequences)
-    biLSTM_2 = Bidirectional(CuDNNLSTM(64,return_sequences=True))(biLSTM_1)
-    att = Attention(MAX_SEQUENCE_LENGTH)(biLSTM_2)
-    full_conn = Dense(256, activation="relu")(att)
+    biLSTM_1 = Bidirectional(CuDNNLSTM(40, return_sequences=True))(spac_drop)
+    biLSTM_2 = Bidirectional(CuDNNLSTM(40,return_sequences=True))(spac_drop)
+    att_1 = Attention(MAX_SEQUENCE_LENGTH)(biLSTM_2)
+    att_2 = Attention(MAX_SEQUENCE_LENGTH)(biLSTM_1)
+    avg_pool = GlobalAveragePooling1D()(biLSTM_2)
+    max_pool = GlobalMaxPooling1D()(biLSTM_2)
+    conc = concatenate([att_1, att_2, avg_pool, max_pool])
 
     # full-connect -- MAIN  
+    full_conn = Dense(16, activation="relu")(conc)
     dropout = Dropout(dropout_prob)(full_conn)
     output = Dense(n_classes_main, activation= 'softmax')(dropout)
 
     # full-connect -- sub 
-    dropout_1_sub = Dropout(dropout_prob)(full_conn)
-    #full_conn_2_sub = Dense(64, activation= 'tanh')(dropout_1_sub)
-    #dropout_2_sub = Dropout(dropout_prob)(full_conn_2_sub)
+    full_conn_2 = Dense(16, activation="relu")(conc)
+    dropout_1_sub = Dropout(dropout_prob)(full_conn_2)
     output_sub = Dense(n_classes_sub, activation= 'softmax')(dropout_1_sub)
 
     model = Model(sequence_input, [output,output_sub])
