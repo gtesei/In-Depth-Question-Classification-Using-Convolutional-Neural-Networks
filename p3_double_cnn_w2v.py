@@ -51,7 +51,8 @@ data_train, y_train_main_cat, y_test_main_cat, data_test, y_train_sub_cat, y_tes
 acc_mains , acc_subs = [] ,[]
 for i in range(REPEAT):
     K.clear_session()
-    model = build_model_tr_embed_2_output(MAX_SEQUENCE_LENGTH,embedding_matrix, EMBEDDING_DIM, dropout_prob=0.5,n_classes_main=len(map_label_main),n_classes_sub=len(map_label_sub),tr_embed=False)
+    #model = build_model_tr_embed_2_output(MAX_SEQUENCE_LENGTH,embedding_matrix, EMBEDDING_DIM, dropout_prob=0.5,n_classes_main=len(map_label_main),n_classes_sub=len(map_label_sub),tr_embed=False)
+    model = build_model_attention1_2_output(MAX_SEQUENCE_LENGTH,embedding_matrix, EMBEDDING_DIM, dropout_prob=0.5,n_classes_main=len(map_label_main),n_classes_sub=len(map_label_sub),tr_embed=False)
     model.compile(optimizer= 'adam', loss='categorical_crossentropy', metrics= ['accuracy'],loss_weights=[0.5, 0.5])
     model.summary()
     earlystopper = EarlyStopping(patience=20, verbose=1,monitor='val_dense_6_acc',mode='max')
