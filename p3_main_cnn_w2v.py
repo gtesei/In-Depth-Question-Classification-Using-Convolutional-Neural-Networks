@@ -67,7 +67,8 @@ else:
 	labels_test = y_test_sub_cat
 	_map_label = map_label_sub
 
-model = build_model_tr_embed(MAX_SEQUENCE_LENGTH,embedding_matrix, EMBEDDING_DIM, dropout_prob=0.5,n_classes=len(_map_label),tr_embed=False)
+#model = build_model_tr_embed(MAX_SEQUENCE_LENGTH,embedding_matrix, EMBEDDING_DIM, dropout_prob=0.5,n_classes=len(_map_label),tr_embed=False)
+model = build_model_attention1_2_output(MAX_SEQUENCE_LENGTH,embedding_matrix, EMBEDDING_DIM, dropout_prob=0.5,n_classes=len(_map_label),tr_embed=False)
 model.compile(optimizer= 'adam', loss='categorical_crossentropy', metrics= ['accuracy'])
 model.summary()
 earlystopper = EarlyStopping(patience=20, verbose=1,monitor='val_acc',mode='max')
