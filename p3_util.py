@@ -21,26 +21,29 @@ from keras.preprocessing.text import text_to_word_sequence
 from sklearn.preprocessing import LabelEncoder
 
 from keras.layers import Reshape
-
+from keras.layers.normalization import BatchNormalization
 
 import re
 from keras.preprocessing.text import Tokenizer
 
 import warnings
 from operator import itemgetter 
-
+from keras.layers import Reshape, Flatten, Concatenate, Dropout, SpatialDropout1D
 from keras.models import Sequential,Model
 from keras.layers import CuDNNLSTM, Dense, Bidirectional, Input,Dropout
-
+from keras.layers import Bidirectional, GlobalMaxPool1D, GlobalMaxPooling1D, GlobalAveragePooling1D
 from keras import backend as K
 from keras.engine.topology import Layer
 from keras import initializers, regularizers, constraints
+
+from keras.layers import Bidirectional, Concatenate, Permute, Dot, Input, LSTM, Multiply
+from keras.layers import RepeatVector, Dense, Activation, Lambda
 
 ############# FUNC #############
 
 # https://www.kaggle.com/qqgeogor/keras-lstm-attention-glove840b-lb-0-043
 class Attention(Layer):
-    def __init__(self, step_dim,
+    def __init__(self, step_dim=33,
                  W_regularizer=None, b_regularizer=None,
                  W_constraint=None, b_constraint=None,
                  bias=True, **kwargs):
@@ -57,6 +60,76 @@ class Attention(Layer):
         self.step_dim = step_dim
         self.features_dim = 0
         super(Attention, self).__init__(**kwargs)
+
+    def build(self, input_shape):
+        assert len(input_shape) == 3
+
+        self.W = self.add_weight((input_shape[-1],),
+                                 initializer=self.init,
+                                 name='{}_W'.format(self.name),
+                                 regularizer=self.W_regularizer,
+                                 constraint=self.W_constraint)
+        self.features_dim = input_shape[-1]
+
+        if self.bias:
+            self.b = self.add_weight((input_shape[1],),
+                                     initializer='zero',
+                                     name='{}_b'.format(self.name),
+                                     regularizer=self.b_regularizer,
+                                     constraint=self.b_constraint)
+        else:
+            self.b = None
+
+        self.built = True
+
+    def compute_mask(self, input, input_mask=None):
+        return None
+
+    def call(self, x, mask=None):
+        features_dim = self.features_dim
+        step_dim = self.step_dim
+
+        eij = K.reshape(K.dot(K.reshape(x, (-1, features_dim)),
+                        K.reshape(self.W, (features_dim, 1))), (-1, step_dim))
+
+        if self.bias:
+            eij += self.b
+
+        eij = K.tanh(eij)
+
+        a = K.exp(eij)
+
+        if mask is not None:
+            a *= K.cast(mask, K.floatx())
+
+        a /= K.cast(K.sum(a, axis=1, keepdims=True) + K.epsilon(), K.floatx())
+
+        a = K.expand_dims(a)
+        weighted_input = x * a
+        return K.sum(weighted_input, axis=1)
+
+    def compute_output_shape(self, input_shape):
+        return input_shape[0],  self.features_dim
+
+
+class Attention_CNN(Layer):
+    def __init__(self, step_dim=2000,
+                 W_regularizer=None, b_regularizer=None,
+                 W_constraint=None, b_constraint=None,
+                 bias=True, **kwargs):
+        self.supports_masking = True
+        self.init = initializers.get('glorot_uniform')
+
+        self.W_regularizer = regularizers.get(W_regularizer)
+        self.b_regularizer = regularizers.get(b_regularizer)
+
+        self.W_constraint = constraints.get(W_constraint)
+        self.b_constraint = constraints.get(b_constraint)
+
+        self.bias = bias
+        self.step_dim = step_dim
+        self.features_dim = 0
+        super(Attention_CNN, self).__init__(**kwargs)
 
     def build(self, input_shape):
         assert len(input_shape) == 3
@@ -141,7 +214,6 @@ def process_text(text):
 
 def make_dataset_2_cat(model_word_embed, 
                  EMBEDDING_DIM,
-                 MAX_SEQUENCE_LENGTH, 
                  train_files = ['train_5500.txt'] , 
                  test_files = ['test_data.txt' , 'quora_test_set.txt'],
                  lower=False):
@@ -189,6 +261,13 @@ def make_dataset_2_cat(model_word_embed,
     assert len(test_main_cat_list) == len(test_text_list)
     assert len(test_main_cat_list) == len(test_questions)
 
+    MAX_SEQUENCE_LENGTH_TR = len(max(train_text_list,key=len))
+    MAX_SEQUENCE_LENGTH_TS = len(max(test_text_list,key=len))
+    MAX_SEQUENCE_LENGTH = max(MAX_SEQUENCE_LENGTH_TR,MAX_SEQUENCE_LENGTH_TS)
+    print("MAX_SEQUENCE_LENGTH_TR:",MAX_SEQUENCE_LENGTH_TR)
+    print("MAX_SEQUENCE_LENGTH_TS:",MAX_SEQUENCE_LENGTH_TS)
+    print("--> MAX_SEQUENCE_LENGTH:",MAX_SEQUENCE_LENGTH)
+
     print(" Train - MAIN Categories:",len(set(train_main_cat_list))," - ",set(train_main_cat_list))
     print(" Train - Sub Categories:",len(set(train_sub_cat_list))," - ",set(train_sub_cat_list))
 
@@ -216,12 +295,22 @@ def make_dataset_2_cat(model_word_embed,
     #
     nb_words = len(tokenizer.word_index)+1
     embedding_matrix = np.zeros((nb_words, 300))
-    for word, i in tokenizer.word_index.items():
-        if word in model_word_embed.vocab:
-            #print('IN:',word)
-            embedding_matrix[i] = model_word_embed.word_vec(word)
-        else:
-            print('>>> OUT <<<:',word)
+    if type(model_word_embed) is dict:
+        # Glove
+        for word, i in tokenizer.word_index.items():
+            if word in model_word_embed.keys():
+                #print('IN:',word)
+                embedding_matrix[i] = model_word_embed[word]
+            else:
+                print('>>> OUT <<<:',word)
+    else:
+        # Gensim 
+        for word, i in tokenizer.word_index.items():
+            if word in model_word_embed.vocab:
+                #print('IN:',word)
+                embedding_matrix[i] = model_word_embed.word_vec(word)
+            else:
+                print('>>> OUT <<<:',word)
     print('Null word embeddings: %d' % np.sum(np.sum(embedding_matrix, axis=1) == 0))
     
     #
@@ -254,7 +343,7 @@ def make_dataset_2_cat(model_word_embed,
     map_label_sub = {v: k for k, v in map_label_sub.items()}
     print("map_label_sub::",map_label_sub)
     #
-    return data_train, y_train_main_cat, y_test_main_cat, data_test, y_train_sub_cat, y_test_sub_cat, embedding_matrix , train_questions, test_questions, map_label_main, map_label_sub    
+    return data_train, y_train_main_cat, y_test_main_cat, data_test, y_train_sub_cat, y_test_sub_cat, embedding_matrix , train_questions, test_questions, map_label_main, map_label_sub, MAX_SEQUENCE_LENGTH    
     
 
 def make_dataset(model_word_embed, 
@@ -402,21 +491,27 @@ def build_model_tr_embed_2_output(MAX_SEQUENCE_LENGTH,
     ### -------------------------- MAIN CAT
     # 2-gram
     conv_1 = Conv2D(500, (2, EMBEDDING_DIM), activation="relu") (embedded_sequences_rh)
-    max_pool_1 = MaxPooling2D(pool_size=(30, 1 ))(conv_1)
+    max_pool_1 = MaxPooling2D(pool_size=(MAX_SEQUENCE_LENGTH-2, 1 ))(conv_1) # 30
     # 3-gram
     conv_2 = Conv2D(500, (3, EMBEDDING_DIM), activation="relu") (embedded_sequences_rh)
-    max_pool_2 = MaxPooling2D(pool_size=(29, 1 ))(conv_2)
+    max_pool_2 = MaxPooling2D(pool_size=(MAX_SEQUENCE_LENGTH-3, 1 ))(conv_2) # 29
     # 4-gram
     conv_3 = Conv2D(500, (4, EMBEDDING_DIM), activation="relu") (embedded_sequences_rh)
-    max_pool_3 = MaxPooling2D(pool_size=(28, 1 ))(conv_3)
+    max_pool_3 = MaxPooling2D(pool_size=(MAX_SEQUENCE_LENGTH-4, 1 ))(conv_3) # 28
     # 5-gram
     conv_4 = Conv2D(500, (5, EMBEDDING_DIM), activation="relu") (embedded_sequences_rh)
-    max_pool_4 = MaxPooling2D(pool_size=(27, 1))(conv_4)
+    max_pool_4 = MaxPooling2D(pool_size=(MAX_SEQUENCE_LENGTH-5, 1))(conv_4) # 27
     
     # concat 
     merged = concatenate([max_pool_1, max_pool_2, max_pool_3,max_pool_4])
+
+    
+    #merged = Reshape((1,-1))(merged)
+    #flatten = Attention_CNN(1)(merged)
     flatten = Flatten()(merged)
     
+
+
     # full-connect -- MAIN  
     full_conn = Dense(128, activation= 'tanh')(flatten)
     dropout_1 = Dropout(dropout_prob)(full_conn)
@@ -424,14 +519,14 @@ def build_model_tr_embed_2_output(MAX_SEQUENCE_LENGTH,
     dropout_2 = Dropout(dropout_prob)(full_conn_2)
     output = Dense(n_classes_main, activation= 'softmax')(dropout_2)    
 
-    o2 = Reshape((1,1,6))(output)
+    #o2 = Reshape((1,1,6))(output)
     
     # concat 2  
-    merged_2 = concatenate([max_pool_1, max_pool_2, max_pool_3,max_pool_4])
-    flatten_2 = Flatten()(merged_2)
+    #merged_2 = concatenate([max_pool_1, max_pool_2, max_pool_3,max_pool_4])
+    #flatten_2 = Flatten()(merged_2)
 
     # full-connect -- sub
-    full_conn_sub = Dense(128, activation= 'tanh')(flatten_2)
+    full_conn_sub = Dense(128, activation= 'tanh')(flatten)
     dropout_1_sub = Dropout(dropout_prob)(full_conn_sub)
     full_conn_2_sub = Dense(64, activation= 'tanh')(dropout_1_sub)
     dropout_2_sub = Dropout(dropout_prob)(full_conn_2_sub)
@@ -453,28 +548,79 @@ def build_model_attention1_2_output(MAX_SEQUENCE_LENGTH,
 
     sequence_input = Input(shape=(MAX_SEQUENCE_LENGTH,), dtype='int32')
     embedded_sequences = embedding_layer(sequence_input)
-    spac_drop = SpatialDropout1D(0.1)(embedded_sequences)
 
-    biLSTM_1 = Bidirectional(CuDNNLSTM(40, return_sequences=True))(spac_drop)
-    biLSTM_2 = Bidirectional(CuDNNLSTM(40,return_sequences=True))(spac_drop)
-    att_1 = Attention(MAX_SEQUENCE_LENGTH)(biLSTM_2)
-    att_2 = Attention(MAX_SEQUENCE_LENGTH)(biLSTM_1)
-    avg_pool = GlobalAveragePooling1D()(biLSTM_2)
-    max_pool = GlobalMaxPooling1D()(biLSTM_2)
-    conc = concatenate([att_1, att_2, avg_pool, max_pool])
+    biLSTM_1 = Bidirectional(CuDNNLSTM(MAX_SEQUENCE_LENGTH, return_sequences=True))(embedded_sequences)
+    biLSTM_2 = Bidirectional(CuDNNLSTM(MAX_SEQUENCE_LENGTH,return_sequences=False))(biLSTM_1)
+    #att_1 = Attention(MAX_SEQUENCE_LENGTH)(biLSTM_2)
+    att_1 = biLSTM_2
 
     # full-connect -- MAIN  
-    full_conn = Dense(16, activation="relu")(conc)
-    dropout = Dropout(dropout_prob)(full_conn)
-    output = Dense(n_classes_main, activation= 'softmax')(dropout)
+    full_conn = Dense(2*256, activation="relu")(att_1)
+    output = Dense(n_classes_main, activation= 'softmax')(full_conn)
 
     # full-connect -- sub 
-    full_conn_2 = Dense(16, activation="relu")(conc)
-    dropout_1_sub = Dropout(dropout_prob)(full_conn_2)
-    output_sub = Dense(n_classes_sub, activation= 'softmax')(dropout_1_sub)
+    full_conn_2 = Dense(2*256, activation="relu")(att_1)
+    output_sub = Dense(n_classes_sub, activation= 'softmax')(full_conn_2)
 
     model = Model(sequence_input, [output,output_sub])
     return model
+
+
+def build_model_attention2_2_output(MAX_SEQUENCE_LENGTH,
+                embedding_matrix, 
+                EMBEDDING_DIM, 
+                dropout_prob=0.5,
+                n_classes_main=6,
+                n_classes_sub=0,
+                tr_embed=True):
+
+    def softmax(x, axis=1):
+        ndim = K.ndim(x)
+        if ndim == 2:
+            return K.softmax(x)
+        elif ndim > 2:
+            e = K.exp(x - K.max(x, axis=axis, keepdims=True))
+            s = K.sum(e, axis=axis, keepdims=True)
+            return e / s
+        else:
+            raise ValueError('Cannot apply softmax to a tensor that is 1D')
+
+    def one_step_attention(a):
+        e = densor1(a)
+        energies = densor2(e)
+        alphas = activator(energies)
+        context = dotor([alphas,a])
+        return context
+
+    embedding_layer = Embedding(embedding_matrix.shape[0],EMBEDDING_DIM,weights=[embedding_matrix],input_length=MAX_SEQUENCE_LENGTH,trainable=tr_embed)
+    sequence_input = Input(shape=(MAX_SEQUENCE_LENGTH,), dtype='int32')
+    embedded_sequences = embedding_layer(sequence_input)
+
+    biLSTM_1 = Bidirectional(CuDNNLSTM(MAX_SEQUENCE_LENGTH, return_sequences=True))(embedded_sequences)
+    biLSTM_2 = Bidirectional(CuDNNLSTM(MAX_SEQUENCE_LENGTH,return_sequences=True))(biLSTM_1)
+
+    ##
+    densor1 = Dense(10, activation = "tanh")
+    densor2 = Dense(1, activation = "relu")
+    activator = Activation(softmax, name='attention_weights') # We are using a custom softmax(axis = 1) loaded in this notebook
+    dotor = Dot(axes = 1)
+
+    ##
+    context = one_step_attention(biLSTM_2)
+    context = Flatten()(context)
+
+    # full-connect -- MAIN  
+    full_conn = Dense(MAX_SEQUENCE_LENGTH, activation="relu")(context)
+    output = Dense(n_classes_main, activation=softmax)(full_conn)
+
+    # full-connect -- sub 
+    full_conn_2 = Dense(MAX_SEQUENCE_LENGTH, activation="relu")(context)
+    output_sub = Dense(n_classes_sub, activation=softmax)(full_conn_2)
+
+    model = Model(sequence_input, [output,output_sub])
+    return model
+
+
 
 
 def build_2_model(input_shape=(32,300,1),
