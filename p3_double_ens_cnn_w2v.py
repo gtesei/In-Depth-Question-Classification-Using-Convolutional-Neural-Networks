@@ -67,7 +67,7 @@ print(">> Double")
 np.random.seed(2)
 EMBEDDING_DIM = 300
 N_EPOCHS = 200
-W2V_LIST = = ["goog","glove","fasttext"] 
+W2V_LIST = ["goog","glove","fasttext"] 
 FILE_OUT = "ensemb_results.txt"
 
 preds = [] 
@@ -83,7 +83,6 @@ for wt in W2V_LIST:
     earlystopper = EarlyStopping(patience=20, verbose=1,monitor='val_dense_6_acc',mode='max')
     checkpointer = ModelCheckpoint(PREFIX+wt+'_model.h5', verbose=1, save_best_only=True,monitor='val_dense_6_acc',mode='max')
     reduce_lr = ReduceLROnPlateau(factor=0.2, patience=5, min_lr=0.00001, verbose=1,monitor='val_dense_6_acc',mode='max')
-    print(">> TRAINING ",i,"/",REPEAT,"...")
     results = model.fit(data_train, [y_train_main_cat,y_train_sub_cat],
                     validation_data=[data_test,[y_test_main_cat,y_test_sub_cat]],
                     batch_size=66, epochs=N_EPOCHS,
@@ -97,11 +96,10 @@ for wt in W2V_LIST:
 
 ## 
 print(">>>> Model Averaging ... ")
-(pred[0] + pred[0]) /2
 
 pmain, psub = None, None 
 for p in preds:
-    if pmain = None:
+    if pmain is None:
         pmain = p[0]
         psub = p[1]
     else:
@@ -109,13 +107,14 @@ for p in preds:
         psub = psub + p[1]
 
 pmain = pmain / len(preds) 
-psub = psub / len(preds) 
+psub = psub / len(preds)
+pall = [pmain,psub]
     
 print(">>> Sub category:")
-acc_sub , error_df_sub = test_accuracy2(model,data_test,y_test_sub_cat,test_questions,map_label=map_label_sub)
+acc_sub , error_df_sub = test_accuracy3(pall,data_test,y_test_sub_cat,test_questions,map_label=map_label_sub)
 print(">> acc_sub:",acc_sub)
 print(">>> Main category:")
-acc_main , error_df_main = test_accuracy2(model,data_test,y_test_main_cat,test_questions,map_label=map_label_main)
+acc_main , error_df_main = test_accuracy3(pall,data_test,y_test_main_cat,test_questions,map_label=map_label_main)
 print(">> acc_main:",acc_main)
 # error_df_sub.to_csv(PREFIX+'__val_acc_'+str(acc_sub)+'__error_questions.csv')
 

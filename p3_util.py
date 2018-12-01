@@ -754,7 +754,7 @@ def test_accuracy2(model,
     error_df = pd.DataFrame(err_dict)
     return acc , error_df
 
-def test_accuracy3(y_pred
+def test_accuracy3(y_pred,
                   y_test,
                   test_questions,
                   map_label = {0:'Abbreviation', 1:'Description', 2:'Entity', 3:'Human', 4:'Location', 5:'Numeric'}, 
