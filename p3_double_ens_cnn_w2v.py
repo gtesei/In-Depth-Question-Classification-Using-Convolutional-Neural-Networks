@@ -111,10 +111,10 @@ psub = psub / len(preds)
 pall = [pmain,psub]
     
 print(">>> Sub category:")
-acc_sub , error_df_sub = test_accuracy3(pall,data_test,y_test_sub_cat,test_questions,map_label=map_label_sub)
+acc_sub , error_df_sub = test_accuracy3(pall,y_test_sub_cat,test_questions,map_label=map_label_sub)
 print(">> acc_sub:",acc_sub)
 print(">>> Main category:")
-acc_main , error_df_main = test_accuracy3(pall,data_test,y_test_main_cat,test_questions,map_label=map_label_main)
+acc_main , error_df_main = test_accuracy3(pall,y_test_main_cat,test_questions,map_label=map_label_main)
 print(">> acc_main:",acc_main)
 # error_df_sub.to_csv(PREFIX+'__val_acc_'+str(acc_sub)+'__error_questions.csv')
 
