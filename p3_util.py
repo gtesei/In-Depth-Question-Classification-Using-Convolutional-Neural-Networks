@@ -775,7 +775,7 @@ def test_accuracy3(y_pred,
     err_list = [] 
     pred_list = [] 
     truth_list = [] 
-    for i in range(len(x_test)):
+    for i in range(len(y_test)):
         if originals[i] != predictions[i]:
             err_list.append(test_questions[i])
             pred_list.append(map_label[predictions[i]])
@@ -783,7 +783,7 @@ def test_accuracy3(y_pred,
     err_dict = {'question': err_list , 'prediction': pred_list , 'truth': truth_list}
     for lab in range(_n_labels):
         probs = [] 
-        for i in range(len(x_test)):
+        for i in range(len(y_test)):
             if originals[i] != predictions[i]:
                 probs.append(_predictions[i][lab])
         err_dict[str("prob_"+ map_label[lab])] = probs

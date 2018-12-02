@@ -33,7 +33,20 @@ from p3_util import *
 def process_glove(we_fn='glove.6B.300d.txt'):
     print('>> Glove ...')
     embeddings_index = {}
-    f = open(os.path.join('data', we_fn))
+    f = open(we_fn)
+    for line in f:
+        values = line.split(' ')
+        word = values[0] #print("values:",values)
+        coefs = np.asarray(values[1:], dtype='float32')
+        embeddings_index[word] = coefs
+    f.close()
+    print('Found %s word vectors.' % len(embeddings_index))
+    return embeddings_index
+
+def process_para(we_fn='glove.6B.300d.txt'):
+    print('>> Para ...')
+    embeddings_index = {}
+    f = open(we_fn,encoding="utf8",errors='ignore')
     for line in f:
         values = line.split(' ')
         word = values[0] #print("values:",values)
@@ -51,6 +64,9 @@ def get_w2v(name):
     elif name == "glove":
         print(">> loading glove.840B.300d.txt ...")
         w2v = process_glove('/home/ubuntu/var/quora-insincere-questions-classification/data/glove.840B.300d/glove.840B.300d.txt')
+    elif name == "para":
+        print(">> loading paragram_300_sl999.txt ...")
+        w2v = process_para('/home/ubuntu/var/quora-insincere-questions-classification/data/paragram_300_sl999/paragram_300_sl999.txt')    
     elif name == "fasttext":
         print(">> loading wiki-news-300d-1M.vec ...")
         w2v = gensim.models.KeyedVectors.load_word2vec_format('/home/ubuntu/var/quora-insincere-questions-classification/data/wiki-news-300d-1M/wiki-news-300d-1M.vec')##fasttext
@@ -67,7 +83,7 @@ print(">> Double")
 np.random.seed(2)
 EMBEDDING_DIM = 300
 N_EPOCHS = 200
-W2V_LIST = ["goog","glove","fasttext"] 
+W2V_LIST = ["goog","glove","fasttext"]
 FILE_OUT = "ensemb_results.txt"
 
 preds = [] 
