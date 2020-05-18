@@ -32,12 +32,14 @@ from p3_util import *
 ############# MAIN #############
 if len(sys.argv) == 2:
 	if sys.argv[1] == "main":
-                #os.makedirs(os.path.dirname('results/main_word2vec/a.csv'))
+                if not os.path.exists('results/main_word2vec'):
+                        os.makedirs('results/main_word2vec')
                 PREFIX = "results/main_word2vec/word2vec_main_"
                 print(">> MAIN-category")
                 IS_MAIN_CAT = True 
 	elif sys.argv[1] == "sub":
-                #os.makedirs(os.path.dirname('results/flat_word2vec/a.csv'))
+                if not os.path.exists('results/flat_word2vec'):
+                        os.makedirs(os.path.dirname('results/flat_word2vec'),exist_ok=True)
                 PREFIX = "results/flat_word2vec/word2vec_flat_"
                 print(">> Sub-category")
                 IS_MAIN_CAT = False  
@@ -56,7 +58,7 @@ print(">> loading GoogleNews-vectors-negative300.bin ...")
 w2v = gensim.models.KeyedVectors.load_word2vec_format('GoogleNews-vectors-negative300.bin', binary=True)  
 
 print(">> making dataset / building model...")
-data_train, y_train_main_cat, y_test_main_cat, data_test, y_train_sub_cat, y_test_sub_cat, embedding_matrix , train_questions, test_questions, map_label_main, map_label_sub =make_dataset_2_cat(w2v,EMBEDDING_DIM, MAX_SEQUENCE_LENGTH, train_files = ['train_5500.txt'] , test_files = ['test_data.txt']) # , 'quora_test_set.txt'])
+data_train, y_train_main_cat, y_test_main_cat, data_test, y_train_sub_cat, y_test_sub_cat, embedding_matrix , train_questions, test_questions, map_label_main, map_label_sub,MAX_SEQUENCE_LENGTH = make_dataset_2_cat(w2v,EMBEDDING_DIM, train_files = ['train_5500.txt'] , test_files = ['test_data.txt'],lower=False) # , 'quora_test_set.txt'])
 
 if IS_MAIN_CAT:
 	labels_train = y_train_main_cat

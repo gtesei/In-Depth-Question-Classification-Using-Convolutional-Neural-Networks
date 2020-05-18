@@ -310,7 +310,7 @@ def make_dataset_2_cat(model_word_embed,
                 #print('IN:',word)
                 embedding_matrix[i] = model_word_embed.word_vec(word)
             else:
-                print('>>> OUT <<<:',word)
+                print('>>> OUT <<<:',word.encode('utf-8'))
     print('Null word embeddings: %d' % np.sum(np.sum(embedding_matrix, axis=1) == 0))
     
     #
