@@ -212,6 +212,153 @@ def process_text(text):
 
 
 
+def make_dataset_3_cat(model_word_embed, 
+                 EMBEDDING_DIM,
+                 train_files = ['train_5500.txt'] , 
+                 test_files = ['test_data.txt' , 'quora_test_set.txt'],
+                 lower=False,
+                 additional_question_list=None):
+    
+    all_files = train_files + test_files
+    
+    train_main_cat_list = [] 
+    train_sub_cat_list = []
+    train_text_list = []
+    train_questions = []
+
+    test_main_cat_list = [] 
+    test_sub_cat_list = []
+    test_text_list = []
+    test_questions = []
+    
+    ##
+    if additional_question_list is not None:
+        additional_train_text_list = [] 
+        for q in additional_question_list:
+            additional_train_text_list.append(text_to_word_sequence(process_text(q),lower=lower))
+    
+    ##
+    for f in all_files: 
+        lines = open(f, 'r' , encoding = "ISO-8859-1").read().splitlines()
+        print(f," - size:",len(lines) , " - sample: ",lines[0])
+        for i in range(len(lines)):
+            tokens = lines[i].split()
+            m_cat, _ = tokens[0].split(":")
+            s_cat = tokens[0]
+            tokens.pop(0)
+            text = ' '.join(tokens)
+            if f in train_files:
+                train_main_cat_list.append(m_cat)
+                train_sub_cat_list.append(s_cat)
+                train_text_list.append(text_to_word_sequence(process_text(text),lower=lower))
+                train_questions.append(lines[i])
+            elif m_cat in train_main_cat_list and s_cat in train_sub_cat_list: 
+                test_main_cat_list.append(m_cat)
+                test_sub_cat_list.append(s_cat)
+                test_text_list.append(text_to_word_sequence(process_text(text),lower=lower))
+                test_questions.append(lines[i])
+            else:
+                print(">> removing: ",lines[i])
+            
+    assert len(train_main_cat_list) == len(train_sub_cat_list)
+    assert len(train_main_cat_list) == len(train_text_list)
+    assert len(train_main_cat_list) == len(train_questions)
+
+    assert len(test_main_cat_list) == len(test_sub_cat_list)
+    assert len(test_main_cat_list) == len(test_text_list)
+    assert len(test_main_cat_list) == len(test_questions)
+
+    MAX_SEQUENCE_LENGTH_TR = len(max(train_text_list,key=len))
+    MAX_SEQUENCE_LENGTH_TS = len(max(test_text_list,key=len))
+    MAX_SEQUENCE_LENGTH = max(MAX_SEQUENCE_LENGTH_TR,MAX_SEQUENCE_LENGTH_TS)
+    print("MAX_SEQUENCE_LENGTH_TR:",MAX_SEQUENCE_LENGTH_TR)
+    print("MAX_SEQUENCE_LENGTH_TS:",MAX_SEQUENCE_LENGTH_TS)
+    print("--> MAX_SEQUENCE_LENGTH:",MAX_SEQUENCE_LENGTH)
+
+    print(" Train - MAIN Categories:",len(set(train_main_cat_list))," - ",set(train_main_cat_list))
+    print(" Train - Sub Categories:",len(set(train_sub_cat_list))," - ",set(train_sub_cat_list))
+
+    print(" Test - MAIN Categories:",len(set(test_main_cat_list))," - ",set(test_main_cat_list))
+    print(" Test - Sub Categories:",len(set(test_sub_cat_list))," - ",set(test_sub_cat_list))
+
+    print(">> train_size:",len(train_main_cat_list))
+    print(">> train sample:",train_main_cat_list[44] , train_sub_cat_list[44] , train_text_list[44] , train_questions[44])
+    print(">> test_size:",len(test_main_cat_list))
+    print(">> test sample:",test_main_cat_list[44] , test_sub_cat_list[44] , test_text_list[44] , test_questions[44])
+    
+    ##
+    tokenizer = Tokenizer(num_words=None,char_level=False,lower=False)
+    tokenizer.fit_on_texts(train_text_list + test_text_list) # + ... 
+    sequences_train = tokenizer.texts_to_sequences(train_text_list) # ... train , test .. 
+    sequences_test = tokenizer.texts_to_sequences(test_text_list) # ... train , test .. 
+    data_train = pad_sequences(sequences_train, maxlen=MAX_SEQUENCE_LENGTH,padding='post')
+    data_test = pad_sequences(sequences_test, maxlen=MAX_SEQUENCE_LENGTH,padding='post')
+    if additional_question_list is not None:
+        seq_data_additional_test = tokenizer.texts_to_sequences(additional_train_text_list) 
+        data_additional = pad_sequences(seq_data_additional_test, maxlen=MAX_SEQUENCE_LENGTH,padding='post')
+    else:
+        data_additional = None 
+        
+    ##tokenizer.word_index
+    print(">> data_train:",data_train.shape)
+    print(">> train sample:",sequences_train[44] , data_train[44] , train_text_list[44] , train_questions[44])
+    print(">> data_test:",data_test.shape)
+    print(">> test sample:",sequences_test[44] , data_test[44] , test_text_list[44] , test_questions[44])
+    
+    #
+    nb_words = len(tokenizer.word_index)+1
+    embedding_matrix = np.zeros((nb_words, 300))
+    if type(model_word_embed) is dict:
+        # Glove
+        for word, i in tokenizer.word_index.items():
+            if word in model_word_embed.keys():
+                #print('IN:',word)
+                embedding_matrix[i] = model_word_embed[word]
+            else:
+                print('>>> OUT <<<:',word.encode('utf-8'))
+    else:
+        # Gensim 
+        for word, i in tokenizer.word_index.items():
+            if word in model_word_embed.vocab:
+                #print('IN:',word)
+                embedding_matrix[i] = model_word_embed.word_vec(word)
+            else:
+                print('>>> OUT <<<:',word.encode('utf-8'))
+    print('Null word embeddings: %d' % np.sum(np.sum(embedding_matrix, axis=1) == 0))
+    
+    #
+    label_encoder = LabelEncoder()
+    label_encoder.fit(train_main_cat_list+test_main_cat_list)
+    y_train_main_cat = label_encoder.transform(train_main_cat_list) 
+    y_test_main_cat = label_encoder.transform(test_main_cat_list) 
+    assert len(label_encoder.classes_) == len(set(train_main_cat_list))
+    
+    y_train_main_cat = np_utils.to_categorical(y_train_main_cat,num_classes=len(label_encoder.classes_))
+    y_test_main_cat = np_utils.to_categorical(y_test_main_cat,num_classes=len(label_encoder.classes_))
+    
+    map_label_main = dict(zip(label_encoder.classes_, range(len(label_encoder.classes_))))
+    map_label_main = {v: k for k, v in map_label_main.items()}
+    print("map_label_main::",map_label_main)
+    
+    #
+    label_encoder = LabelEncoder()
+    label_encoder.fit(train_sub_cat_list+test_sub_cat_list)
+    y_train_sub_cat = label_encoder.transform(train_sub_cat_list) 
+    y_test_sub_cat = label_encoder.transform(test_sub_cat_list) 
+    
+    print(len(label_encoder.classes_),len(set(train_sub_cat_list)))
+    assert len(label_encoder.classes_) == len(set(train_sub_cat_list))
+    
+    y_train_sub_cat = np_utils.to_categorical(y_train_sub_cat,num_classes=len(label_encoder.classes_))
+    y_test_sub_cat = np_utils.to_categorical(y_test_sub_cat,num_classes=len(label_encoder.classes_))
+    
+    map_label_sub = dict(zip(label_encoder.classes_, range(len(label_encoder.classes_))))
+    map_label_sub = {v: k for k, v in map_label_sub.items()}
+    print("map_label_sub::",map_label_sub)
+    #
+    return data_train, y_train_main_cat, y_test_main_cat, data_test, y_train_sub_cat, y_test_sub_cat, embedding_matrix , train_questions, test_questions, map_label_main, map_label_sub, MAX_SEQUENCE_LENGTH, data_additional
+    
+
 def make_dataset_2_cat(model_word_embed, 
                  EMBEDDING_DIM,
                  train_files = ['train_5500.txt'] , 
@@ -286,6 +433,7 @@ def make_dataset_2_cat(model_word_embed,
     sequences_test = tokenizer.texts_to_sequences(test_text_list) # ... train , test .. 
     data_train = pad_sequences(sequences_train, maxlen=MAX_SEQUENCE_LENGTH,padding='post')
     data_test = pad_sequences(sequences_test, maxlen=MAX_SEQUENCE_LENGTH,padding='post')
+        
     ##tokenizer.word_index
     print(">> data_train:",data_train.shape)
     print(">> train sample:",sequences_train[44] , data_train[44] , train_text_list[44] , train_questions[44])
@@ -343,7 +491,7 @@ def make_dataset_2_cat(model_word_embed,
     map_label_sub = {v: k for k, v in map_label_sub.items()}
     print("map_label_sub::",map_label_sub)
     #
-    return data_train, y_train_main_cat, y_test_main_cat, data_test, y_train_sub_cat, y_test_sub_cat, embedding_matrix , train_questions, test_questions, map_label_main, map_label_sub, MAX_SEQUENCE_LENGTH    
+    return data_train, y_train_main_cat, y_test_main_cat, data_test, y_train_sub_cat, y_test_sub_cat, embedding_matrix , train_questions, test_questions, map_label_main, map_label_sub, MAX_SEQUENCE_LENGTH
     
 
 def make_dataset(model_word_embed, 
