@@ -40,6 +40,10 @@ from p3_util import *
 
 #####
 PREFIX = "baseline_"
+np.random.seed(2)
+#MAX_SEQUENCE_LENGTH = 32
+EMBEDDING_DIM = 300
+
 model = load_model(PREFIX+'model.h5')
 print(">> loading GoogleNews-vectors-negative300.bin ...")
 w2v = gensim.models.KeyedVectors.load_word2vec_format('GoogleNews-vectors-negative300.bin', binary=True)  
@@ -57,6 +61,4 @@ acc_sub , error_df_sub = test_accuracy2(model,data_test,y_test_sub_cat,test_ques
 print("> Main category:")
 acc_main , error_df_main = test_accuracy2(model,data_test,y_test_main_cat,test_questions,map_label=map_label_main)
 error_df_sub.to_csv(PREFIX+'__val_acc_'+str(acc_sub)+'__error_questions.csv')
-acc_mains.append(acc_main)
-acc_subs.append(acc_sub)
 
