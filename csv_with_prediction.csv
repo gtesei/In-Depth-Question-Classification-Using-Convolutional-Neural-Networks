@@ -1,0 +1,18 @@
+BMedQA_class,MedQA_subclass,TREC_Class,TREC_Subclass,Question,Named_Entity,source,TRAC_main_pred,TRAC_sub_pred
+DRG,DRG:side_effect,DESC,DESC:manner,How Safe Is Metformin,drug_name:metformin,patientsLikeMe,DESC,DESC:manner
+DRG,DRG:side_effect,ENTY,ENTY:other,Diabetes type 2 / Metformin / Bowel Problems,drug_name:metformin,patientsLikeMe,ENTY,ENTY:other
+DRG,DRG:med_advice,DESC,DESC:desc,I just stared taking Trulicity,drug_name:trulicity,patientsLikeMe,DESC,DESC:desc
+DRG,DRG:med_advice,DESC,DESC:desc,Any body else using glucocil ?,drug_name:glucocil,patientsLikeMe,DESC,ENTY:body
+DRG,DRG:med_advice,DESC,DESC:manner,Metformin,drug_name:metformin,patientsLikeMe,ENTY,ENTY:other
+DRG,DRG:med_advice,DESC,DESC:manner,Metformin: Does it work???,drug_name:metformin,patientsLikeMe,DESC,DESC:desc
+DRG,DRG:side_effect,DESC,DESC:desc,Has anybody that's taking met form in noticed hair loss?,drug_name:metformin,patientsLikeMe,ENTY,ENTY:techmeth
+DRG,DRG:med_advice,DESC,DESC:desc,Insulin added to other type 2 medication,drug_name:insulin,patientsLikeMe,ENTY,ENTY:dismed
+DRG,DRG:med_advice,DESC,DESC:desc,Insulin injection issues,drug_name:insulin,patientsLikeMe,DESC,DESC:desc
+DRG,DRG:med_advice,DESC,DESC:desc,DiabetesType 2 and MTHFR 677T- Has anyone tried Metanx?,drug_name:metanx,patientsLikeMe,HUM,HUM:ind
+DRG,DRG:indication,DESC,DESC:reason,Why is Metformin prescribed?,drug_name:metformin,MedlinePlus,DESC,DESC:reason
+DRG,DRG:use,DESC,DESC:manner,How should Metformin be used?,drug_name:metformin,MedlinePlus,DESC,DESC:manner
+DRG,DRG:use,DESC,DESC:manner,What special precautions should I follow?,ctx:drug_name:metformin,MedlinePlus,ENTY,ENTY:other
+DRG,DRG:use,DESC,DESC:manner,How should Metformin be used?,drug_name:metformin,MedlinePlus,DESC,DESC:manner
+DRG,DRG:interaction,DESC,DESC:manner,What if I take metformin and ranolazine?,"drug_name:metformin, drug_name:ranolazine",,DESC,ENTY:other
+DRG,DRG:interaction,DESC,DESC:manner,Can I drink alcohol with metformin?,"drug_name:metformin,drink:alcohol",,ENTY,ENTY:food
+DRG,DRG:side_effect,DESC,DESC:manner,Does metformin increase cardiovascular risk?,"drug_name:metformin,disease:cardiovascular",,DESC,DESC:def

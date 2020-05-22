@@ -53,7 +53,7 @@ if __name__ == '__main__':
     EMBEDDING_DIM = 300
 
     print(">>> reading local csv ... ")
-    df = pd.read_csv(args.local_csv)
+    df = pd.read_csv(args.local_csv,encoding='utf-8')
     question_list = df[args.field].tolist()
     w2v = gensim.models.KeyedVectors.load_word2vec_format('GoogleNews-vectors-negative300.bin', binary=True) 
     print(">> making original dataset / building model...")

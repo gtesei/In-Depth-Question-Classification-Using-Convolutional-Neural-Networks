@@ -1,4 +1,4 @@
-﻿MedQA_class,MedQA_subclass,TREC_Class,TREC_Subclass,Question,Named_Entity,source
+﻿BMedQA_class,MedQA_subclass,TREC_Class,TREC_Subclass,Question,Named_Entity,source
 DRG,DRG:side_effect,DESC,DESC:manner,How Safe Is Metformin,drug_name:metformin,patientsLikeMe
 DRG,DRG:side_effect,ENTY,ENTY:other,Diabetes type 2 / Metformin / Bowel Problems,drug_name:metformin,patientsLikeMe
 DRG,DRG:med_advice,DESC,DESC:desc,I just stared taking Trulicity,drug_name:trulicity,patientsLikeMe
@@ -16,4 +16,3 @@ DRG,DRG:use,DESC,DESC:manner,How should Metformin be used?,drug_name:metformin,M
 DRG,DRG:interaction,DESC,DESC:manner,What if I take metformin and ranolazine?,"drug_name:metformin, drug_name:ranolazine",NA
 DRG,DRG:interaction,DESC,DESC:manner,Can I drink alcohol with metformin?,"drug_name:metformin,drink:alcohol",NA
 DRG,DRG:side_effect,DESC,DESC:manner,Does metformin increase cardiovascular risk?,"drug_name:metformin,disease:cardiovascular",NA
-,,,,,, 

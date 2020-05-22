@@ -235,6 +235,7 @@ def make_dataset_3_cat(model_word_embed,
     if additional_question_list is not None:
         additional_train_text_list = [] 
         for q in additional_question_list:
+            #print(q)
             additional_train_text_list.append(text_to_word_sequence(process_text(q),lower=lower))
     
     ##
