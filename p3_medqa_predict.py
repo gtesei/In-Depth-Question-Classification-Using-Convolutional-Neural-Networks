@@ -34,16 +34,11 @@ from p3_util import *
 
 
 
-
-
-
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Index Elastic')
     parser.add_argument('-local_csv', help='data frame', dest='local_csv', type=str, default='hi_co.csv' )
     parser.add_argument('-field', help='question field', dest='field', type=str, default='Question' )
-  
     args = parser.parse_args()
-    
     # print parameters
     print('-' * 30)
     print('Parameters .')
@@ -51,7 +46,6 @@ if __name__ == '__main__':
     for key, value in vars(args).items():
         print('{:<20} := {}'.format(key, value))
     print('-' * 30)
-    
     #####
     PREFIX = "baseline_"
     np.random.seed(2)
@@ -61,18 +55,13 @@ if __name__ == '__main__':
     print(">>> reading local csv ... ")
     df = pd.read_csv(args.local_csv)
     question_list = df[args.field].tolist()
-     
     w2v = gensim.models.KeyedVectors.load_word2vec_format('GoogleNews-vectors-negative300.bin', binary=True) 
-    
     print(">> making original dataset / building model...")
     data_train, y_train_main_cat, y_test_main_cat, data_test, y_train_sub_cat, y_test_sub_cat, embedding_matrix , train_questions, test_questions, map_label_main, map_label_sub, MAX_SEQUENCE_LENGTH,data_additional = make_dataset_3_cat(w2v,EMBEDDING_DIM, train_files = ['train_5500.txt'] , test_files = ['test_data.txt'],lower=False,additional_question_list=question_list) # , 'quora_test_set.txt'])
-    
-    
     #####    
     model = load_model(PREFIX+'model.h5')
     print(">> loading GoogleNews-vectors-negative300.bin ...")
     #w2v = gensim.models.KeyedVectors.load_word2vec_format('GoogleNews-vectors-negative300.bin', binary=True)  
-    
     ####
     print(">> TEST ...")
     print("> Sub category:")
@@ -81,13 +70,13 @@ if __name__ == '__main__':
     acc_main , error_df_main = test_accuracy2(model,data_test,y_test_main_cat,test_questions,map_label=map_label_main)
     error_df_sub.to_csv(PREFIX+'__val_acc_'+str(acc_sub)+'__error_questions.csv')
     ####
-    
     main_pred , sub_pred = model.predict(data_additional)
+    main_pred = p3_util.categorical_probas_to_classes(main_pred)
+    sub_pred = p3_util.categorical_probas_to_classes(sub_pred)
     main_pred_list , sub_pred_list = [] , [] 
     for i in range(len(question_list)):
         main_pred_list.append(map_label_main[main_pred[i]])
         sub_pred_list.append(map_label_sub[sub_pred[i]])
-        
     ##
     df['TRAC_main_pred'] = main_pred_list
     df['TRAC_sub_pred'] = sub_pred_list
