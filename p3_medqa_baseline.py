@@ -76,7 +76,7 @@ model.summary()
 earlystopper = EarlyStopping(patience=20, verbose=1,monitor='val_dense_6_acc',mode='max')
 checkpointer = ModelCheckpoint(PREFIX+'model.h5', verbose=1, save_best_only=True,monitor='val_dense_6_acc',mode='max')
 reduce_lr = ReduceLROnPlateau(factor=0.2, patience=5, min_lr=0.00001, verbose=1,monitor='val_dense_6_acc',mode='max')
-print(">> TRAINING ",i,"/",REPEAT,"...")
+print(">> TRAINING ...")
 results = model.fit(data_train, [y_train_main_cat,y_train_sub_cat],
                 validation_data=[data_test,[y_test_main_cat,y_test_sub_cat]],
                 batch_size=66, epochs=N_EPOCHS,

@@ -33,7 +33,7 @@ from p3_util import *
 def process_glove(we_fn='glove.6B.300d.txt'):
     print('>> Glove ...')
     embeddings_index = {}
-    f = open(we_fn)
+    f = open(we_fn,encoding="utf-8")
     for line in f:
         values = line.split(' ')
         word = values[0] #print("values:",values)
@@ -63,13 +63,13 @@ def get_w2v(name):
         #w2v = gensim.models.KeyedVectors.load_word2vec_format('GoogleNews-vectors-negative300-hard-debiased.bin', binary=True)  
     elif name == "glove":
         print(">> loading glove.840B.300d.txt ...")
-        w2v = process_glove('/home/ubuntu/var/quora-insincere-questions-classification/data/glove.840B.300d/glove.840B.300d.txt')
+        w2v = process_glove('glove.840B.300d.txt')
     elif name == "para":
         print(">> loading paragram_300_sl999.txt ...")
         w2v = process_para('/home/ubuntu/var/quora-insincere-questions-classification/data/paragram_300_sl999/paragram_300_sl999.txt')    
     elif name == "fasttext":
         print(">> loading wiki-news-300d-1M.vec ...")
-        w2v = gensim.models.KeyedVectors.load_word2vec_format('/home/ubuntu/var/quora-insincere-questions-classification/data/wiki-news-300d-1M/wiki-news-300d-1M.vec')##fasttext
+        w2v = gensim.models.KeyedVectors.load_word2vec_format('wiki-news-300d-1M.vec')##fasttext
     else:
         raise Exception("w2v not supported:"+str(name))
     return w2v

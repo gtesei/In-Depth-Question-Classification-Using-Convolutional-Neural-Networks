@@ -302,7 +302,7 @@ def make_dataset_2_cat(model_word_embed,
                 #print('IN:',word)
                 embedding_matrix[i] = model_word_embed[word]
             else:
-                print('>>> OUT <<<:',word)
+                print('>>> OUT <<<:',word.encode('utf-8'))
     else:
         # Gensim 
         for word, i in tokenizer.word_index.items():
