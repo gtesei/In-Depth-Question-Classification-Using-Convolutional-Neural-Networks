@@ -71,8 +71,8 @@ if __name__ == '__main__':
     error_df_sub.to_csv(PREFIX+'__val_acc_'+str(acc_sub)+'__error_questions.csv')
     ####
     main_pred , sub_pred = model.predict(data_additional)
-    main_pred = p3_util.categorical_probas_to_classes(main_pred)
-    sub_pred = p3_util.categorical_probas_to_classes(sub_pred)
+    main_pred = categorical_probas_to_classes(main_pred)
+    sub_pred = categorical_probas_to_classes(sub_pred)
     main_pred_list , sub_pred_list = [] , [] 
     for i in range(len(question_list)):
         main_pred_list.append(map_label_main[main_pred[i]])

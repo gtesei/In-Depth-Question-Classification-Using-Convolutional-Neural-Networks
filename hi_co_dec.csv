@@ -1,0 +1,168 @@
+MedQA_class,MedQA_subclass,TREC_Class,TREC_Subclass,Question,Named_Entity,source,TRAC_main_pred,TRAC_sub_pred
+COM,COM:kidney_disease ,DESC,DESC:reason,Is kidney disease the same for people with type 1 diabetes compared to those with type 2 diabetes?,,WebMD,DESC,ENTY:dismed
+HI,HI:diagnosis,DESC,DESC:desc,"In men, what is the difference between type 1 diabetes and type 2 diabetes?",,WebMD,DESC,DESC:desc
+HI,HI:general,ENTY,ENTY:other,"What specific types of diabetes exist other than type 1, type 2, and gestational?",,WebMD,ENTY,ENTY:other
+HI,HI:complications,DESC,DESC:desc,How does tendon damage in type 1 and type 2 diabetes happen?,,WebMD,DESC,DESC:manner
+HI,HI:exam_test,NUM,NUM:other,How often should people with type 1 and type 2 diabetes take urine tests?,,WebMD,NUM,NUM:count
+HI,HI:complications,ENTY,ENTY:other,What type of complications does type 2 diabetes raise?,,WebMD,ENTY,ENTY:other
+HI,HI:complications,DESC,DESC:reason,Is a C-peptide test used for type 1 or type 2 diabetes?,,WebMD,DESC,DESC:reason
+HI,HI:general,DESC,DESC:desc,What goes wrong in the body with type 1 and type 2 diabetes?,,WebMD,DESC,DESC:desc
+HI,HI:general,DESC,DESC:desc,Is type 2 more or less aggressive than type 1 diabetes?,,WebMD,DESC,DESC:desc
+HI,HI:general,DESC,DESC:desc,Are type 1 and type 2 diabetes treated differently?,,WebMD,ENTY,ENTY:dismed
+HI,HI:diet,ENTY,ENTY:food,What is the diabetes diet for type 2 diabetes?,,WebMD,DESC,DESC:def
+HI,HI:diet,DESC,DESC:manner,How does genetic diabetes increase the chances of getting type 2 diabetes?,,WebMD,DESC,DESC:manner
+HI,HI:treatment,ENTY,ENTY:techmeth,What is the treatment for type 2 diabetes related to fatigue?,,WebMD,ENTY,ENTY:dismed
+HI,HI:symptom,ENTY,ENTY:other,What are the symptoms of fatigue related to type 2 diabetes?,,WebMD,DESC,DESC:desc
+HI,HI:diagnosis,HUM,HUM:ind,Who gets type 2 diabetes?,,WebMD,HUM,HUM:ind
+HI,HI:diet,ENTY,ENTY:food,Do I need to eat specific carbs if I am on a type 2 diabetes meal plan?,,WebMD,DESC,DESC:desc
+COM,COM:obesity,DESC,DESC:manner,How is obesity linked to type 2 diabetes?,,WebMD,DESC,DESC:manner
+HI,HI:diet,ENTY,ENTY:other,What are the ingredients for a spicy blend to replace salt if you have type 2 diabetes?,,WebMD,ENTY,ENTY:substance
+HI,HI:general,DESC,DESC:reason,What causes type 2 diabetes?,,WebMD,DESC,DESC:reason
+HI,HI:doctor_search,DESC,DESC:manner,How do I find an endocrinologist if I have type 2 diabetes?,,,DESC,DESC:manner
+HI,HI:doctor_search,DESC,DESC:manner,How do I find a specialist doctor if I have type 2 diabetes?,,,DESC,DESC:manner
+HI,HI:doctor_search,DESC,DESC:manner,How do I choose my therapist if I have type 2 diabetes?,,WebMD,DESC,DESC:manner
+HI,HI:general,DESC,DESC:manner,How does too much glucose from your liver cause type 2 diabetes?,,WebMD,DESC,DESC:manner
+HI,HI:general,DESC,DESC:desc,What can you do without medicine to prevent type 2 diabetes if you have prediabetes?,,WebMD,DESC,DESC:desc
+HI,HI:symptom,ENTY,ENTY:dismed,What are symptoms of type 2 diabetes that aren't directly related to high blood sugar?,,WebMD,ENTY,DESC:desc
+HI,HI:general,DESC,DESC:reason,Why do I need to take injectable drugs for type 2 diabetes?,,WebMD,DESC,DESC:reason
+HI,HI:general,DESC,DESC:def,What does it mean if you have type 2 diabetes?,,WebMD,DESC,DESC:def
+HI,HI:general,ENTY,ENTY:other,What is the most effective way to manage type 2 diabetes?,,WebMD,ENTY,ENTY:dismed
+HI,HI:general,DESC,DESC:manner,How can I tell my family about my type 2 diabetes?,,WebMD,DESC,DESC:manner
+HI,HI:diet,DESC,DESC:reason,Why are whole grains good better for people with type 2 diabetes?,,WebMD,DESC,DESC:reason
+HI,HI:general,DESC,DESC:desc,What happens to your body if you have type 2 diabetes?,,WebMD,DESC,DESC:desc
+HI,HI:general,DESC,DESC:manner,How is type 2 diabetes managed?,,WebMD,DESC,DESC:manner
+HI,HI:complications,DESC,DESC:desc,Does inflammation play a role in the development of type 2 diabetes?,,WebMD,HUM,DESC:desc
+HI,HI:general,ENTY,ENTY:other,What are the main causes of type 2 diabetes?,,WebMD,DESC,DESC:reason
+COM,COM:obesity,DESC,DESC:desc,What is the effect of weight loss surgery on type 2 diabetes?,,WebMD,DESC,DESC:desc
+HI,HI:treatment,DESC,DESC:manner,Is type 2 diabetes curable?,,WebMD,DESC,DESC:def
+HI,HI:treatment,DESC,DESC:manner,How do I know which medicines are the best for my type 2 diabetes?,,WebMD,DESC,DESC:manner
+HI,HI:general,ENTY,ENTY:other,What are the long-term effects of type 2 diabetes?,,WebMD,DESC,DESC:desc
+HI,HI:general,DESC,DESC:desc,How common is type 2 diabetes in men?,,WebMD,NUM,DESC:manner
+HI,HI:general,DESC,DESC:reason,Why is it important to diagnose type 2 diabetes?,,WebMD,DESC,DESC:reason
+HI,HI:exam_test,ENTY,ENTY:techmeth,What is an A1c test for type 2 diabetes?,,WebMD,DESC,DESC:def
+COM,COM:obesity,DESC,DESC:manner,How much do I need to exercise to prevent type 2 diabetes?,,WebMD,NUM,NUM:count
+HI,HI:diet,ENTY,ENTY:food,What should I stop eating to prevent type 2 diabetes?,,WebMD,DESC,DESC:desc
+COM,COM:obesity,ENTY,ENTY:other,What causes obesity in children and where is it most likely to cause type 2 diabetes?,,WebMD,DESC,DESC:reason
+HI,HI:exam_test,ENTY,ENTY:techmeth,What is the oral glucose tolerance test for type 2 diabetes?,,WebMD,DESC,DESC:def
+HI,HI:general,DESC,DESC:manner,How does the liver cause type 2 diabetes?,,WebMD,DESC,DESC:manner
+HI,HI:general,DESC,DESC:manner,How do broken beta cells cause type 2 diabetes?,,WebMD,DESC,DESC:manner
+HI,HI:treatment,ENTY,ENTY:dismed,Which combination of medicine do I need to control my type 2 diabetes?,,WebMD,ENTY,ENTY:other
+HI,HI:general,DESC,DESC:manner,How can I lower my risk of type 2 diabetes if I have gestational diabetes?,,WebMD,DESC,DESC:manner
+HI,HI:complications,ENTY,ENTY:techmeth,What is the best way to avoid complications related to type 2 diabetes?,,WebMD,ENTY,ENTY:techmeth
+HI,HI:complications,DESC,DESC:manner,How can diabetic coma in type 2 diabetes happen?,,WebMD,DESC,DESC:manner
+HI,HI:complications,DESC,DESC:manner,What are some links between sleep and type 2 diabetes?,,WebMD,DESC,DESC:desc
+HI,HI:complications,ENTY,ENTY:other,What problems are caused by type 2 diabetes over time?,,WebMD,ENTY,ENTY:other
+HI,HI:general,ENTY,ENTY:techmeth,What is the best way to manage type 2 diabetes?,,WebMD,ENTY,ENTY:techmeth
+HI,HI:general,HI,HI:general,How do you know if you’re doing well?,,patientsLikeMe,DESC,DESC:manner
+HI,HI:general,ENTY,ENTY:dismed,What advice would you give to someone who is pre-diabetic?,,patientsLikeMe,HUM,ENTY:other
+HI,HI:diet,ENTY,ENTY:food,Eating Type 2,,patientsLikeMe,ENTY,ENTY:other
+HI,HI:general,DESC,DESC:manner,Motivators and barriers: How do you keep yourself healthy?,,patientsLikeMe,DESC,DESC:manner
+COM,COM:general,DESC,DESC:manner,How do you manage other conditions at the same time as your T2D?,,patientsLikeMe,DESC,DESC:manner
+HI,HI:general,DESC,DESC:reason,Why do you look for information about type 2 diabetes?,,patientsLikeMe,DESC,DESC:reason
+HI,HI:exam_test,NUM,NUM:count,How Many times do you test a day?,,patientsLikeMe,NUM,NUM:period
+HI,HI:general,DESC,DESC:desc,Diabetes and constipation,,patientsLikeMe,ENTY,ENTY:dismed
+HI,HI:diet,ENTY,ENTY:food,PASTA???,,patientsLikeMe,ENTY,ENTY:other
+HI,HI:general,DESC,DESC:manner,Trying to get my average blood sugar levels down.,,patientsLikeMe,ENTY,ENTY:food
+HI,HI:general,DESC,DESC:desc,Anybody here with Type 2 Diabetes but on insulin?,,patientsLikeMe,ENTY,LOC:other
+HI,HI:general,DESC,DESC:manner,I got cured completely from Diabetes,,patientsLikeMe,ENTY,ENTY:dismed
+HI,HI:complications,DESC,DESC:desc,blood sugar high in morning,,patientsLikeMe,ENTY,ENTY:food
+HI,HI:diet,ENTY,ENTY:food,Diet,,patientsLikeMe,ENTY,ENTY:other
+HI,HI:complications,DESC,DESC:manner,weight increase due to insulin,,patientsLikeMe,NUM,DESC:reason
+HI,HI:complications,DESC,DESC:desc,High Sugar Level!!!!,,patientsLikeMe,DESC,DESC:def
+HI,HI:complications,DESC,DESC:manner,Losing weight,,patientsLikeMe,NUM,NUM:weight
+HI,HI:diagnosis,DESC,DESC:manner,Am I type 1 or type 2 big question,,patientsLikeMe,DESC,DESC:def
+HI,HI:diagnosis,DESC,DESC:manner,How do I know if I have type 2 diabetes?,,,DESC,DESC:manner
+HI,HI:diagnosis,DESC,DESC:manner,How do I know if I have diabetes?,,,DESC,DESC:manner
+HI,HI:treatment,DESC,DESC:manner,Lose weight as a diabetic,,patientsLikeMe,NUM,NUM:weight
+HI,HI:diet,DESC,DESC:desc,Vegan Diet and Exercise Reverses Type ll,,patientsLikeMe,ENTY,ENTY:other
+COM,COM:kidney_disease ,DESC,DESC:manner,Your kidneys: How does your kidney health fit in with your T2D management plan?,,patientsLikeMe,DESC,DESC:manner
+HI,HI:general,DESC,DESC:desc,Diabetes type 2,,patientsLikeMe,ENTY,ENTY:other
+HI,HI:diet,DESC,DESC:manner,Gluten free and Diabetes,,patientsLikeMe,ENTY,ENTY:other
+COM,COM:kidney_disease ,NUM,NUM:count,How many people here takes something for the protection of the kidneys and what medication do you take?,,patientsLikeMe,NUM,NUM:count
+COM,COM:cardio,DESC,DESC:manner,Your Heart Health: How does your heart health fit in with your T2D management plan?,,patientsLikeMe,DESC,DESC:manner
+HI,HI:diet,ENTY,ENTY:food,Diet,,patientsLikeMe,ENTY,ENTY:other
+HI,HI:diet,ENTY,ENTY:food,"Where do YOU get comfort when ""comfort food"" can make you sicker?",,patientsLikeMe,LOC,LOC:other
+HI,HI:diet,ENTY,ENTY:food,Exercise and Diabetes,,patientsLikeMe,ENTY,ENTY:other
+COM,COM:cardio,DESC,DESC:desc,Any diabetics out there who've also had a heart attack?,,patientsLikeMe,HUM,ENTY:other
+COM,COM:neuropathy,DESC,DESC:manner,Neuropathy how to keep it under control!!!,,patientsLikeMe,ENTY,DESC:manner
+COM,COM:neuropathy,DESC,DESC:manner,My feet are driving me crazy...they hurt a little but ITCH nonstop -advice?,,patientsLikeMe,ENTY,DESC:desc
+HI,HI:exam_test,DESC,DESC:desc,No blood sugar monitoring,,patientsLikeMe,ENTY,ENTY:food
+HI,HI:diet,ENTY,ENTY:food,Low carb / No carb diet,,patientsLikeMe,ENTY,ENTY:food
+HI,HI:exam_test,DESC,DESC:manner,How high is E.R. high?,,patientsLikeMe,NUM,NUM:dist
+COM,COM:obesity,DESC,DESC:manner,Conversation on weight loss/T2DM,,patientsLikeMe,NUM,NUM:weight
+COM,COM:neuropathy,DESC,DESC:desc,Neuropathy,,patientsLikeMe,ENTY,ENTY:other
+HI,HI:diet,ENTY,ENTY:food,Apple Cider Vinegar,,patientsLikeMe,HUM,DESC:def
+HI,HI:diet,ENTY,ENTY:other,Problems with keeping on low carb/diet,,patientsLikeMe,ENTY,ENTY:food
+HI,HI:complications,ENTY,ENTY:other,Loss of libido,,patientsLikeMe,ENTY,ENTY:other
+COM,COM:hypertension,DESC,DESC:desc,What should your blood pressure be to control for diabetes and high blood pressure (hypertension)?,,WebMD,DESC,ENTY:dismed
+COM,COM:hypertension,DESC,DESC:manner,How is diabetes and high blood pressure (hypertension) treated?,,WebMD,DESC,DESC:manner
+COM,COM:hypertension,DESC,DESC:manner,How can diabetes lead to high blood pressure (hypertension)?,,WebMD,DESC,DESC:manner
+COM,COM:hypertension,DESC,DESC:manner,What can you do to prevent diabetes and high blood pressure (hypertension)?,,WebMD,DESC,DESC:desc
+COM,COM:hypertension,ENTY,ENTY:other,Fatigue,,patientsLikeMe,ENTY,ENTY:other
+COM,COM:obesity,DESC,DESC:manner,How is obesity linked to type 2 diabetes?,,WebMD,DESC,DESC:manner
+COM,COM:obesity,ENTY,ENTY:other,What causes obesity in children and where is it most likely to cause type 2 diabetes?,,WebMD,DESC,DESC:reason
+COM,COM:obesity,DESC,DESC:desc,Do natural obesity remedies help type 2 diabetes?,,WebMD,DESC,DESC:reason
+COM,COM:obesity,DESC,DESC:manner,"How is gut bacteria linked to obesity, type 2 diabetes, and heart disease?",,WebMD,DESC,DESC:manner
+COM,COM:kidney_disease ,DESC,DESC:desc,Is kidney disease the same for people with type 1 diabetes compared to those with type 2 diabetes?,,WebMD,DESC,ENTY:dismed
+COM,COM:kidney_disease ,DESC,DESC:desc,Can type 2 diabetes raise your risk for kidney stones?,,WebMD,DESC,DESC:reason
+COM,COM:kidney_disease ,DESC,DESC:manner,How can you get kidney damage if you have type 2 diabetes?,,WebMD,DESC,DESC:manner
+COM,COM:kidney_disease ,DESC,DESC:manner,Are you more likely to have kidney damage if you have type 2 diabetes?,,WebMD,DESC,DESC:desc
+COM,COM:kidney_disease ,DESC,DESC:manner,Your kidneys: How does your kidney health fit in with your T2D management plan?,,patientsLikeMe,DESC,DESC:manner
+COM,COM:kidney_disease ,DESC,DESC:desc,Diabetes and Kidney Disease,,patientsLikeMe,ENTY,ENTY:other
+COM,COM:cardio,DESC,DESC:manner,How can I help my child with type 2 diabetes avoid cardiovascular disease?,,WebMD,DESC,DESC:manner
+COM,COM:cardio,DESC,DESC:manner,How can I lower the risk of cardiovascular disease for my child with type 2 diabetes?,,WebMD,DESC,DESC:manner
+COM,COM:cardio,DESC,DESC:manner,How likely are you to get cardiovascular disease if you have type 2 diabetes?,,WebMD,DESC,DESC:manner
+COM,COM:cardio,DESC,DESC:desc,Can adults get cardiovascular disease from type 2 diabetes?,,WebMD,DESC,ENTY:dismed
+COM,COM:cardio,ENTY,ENTY:food,10 foods that can INCREASE or DECREASE your risk of cardiovascular disease with T2D,,patientsLikeMe,ENTY,ENTY:dismed
+COM,COM:cardio,DESC,DESC:desc,Diabetes and cholestrol medication,,patientsLikeMe,ENTY,ENTY:dismed
+HI,HI:general,DESC,DESC:def,What is type 2 diabetes?,,www.niddk.nih.gov,DESC,DESC:def
+HI,HI:general,HUM,HUM:ind,Who is more likely to develop type 2 diabetes?,,www.niddk.nih.gov,HUM,HUM:ind
+HI,HI:symptom,ENTY,ENTY:other,What are the symptoms of diabetes?,,www.niddk.nih.gov,DESC,DESC:desc
+HI,HI:general,DESC,DESC:reason,What causes type 2 diabetes?,,www.niddk.nih.gov,DESC,DESC:reason
+HI,HI:diagnosis,DESC,DESC:manner,How do health care professionals diagnose type 2 diabetes?,,www.niddk.nih.gov,DESC,DESC:manner
+HI,HI:general,DESC,DESC:manner,How can I manage my type 2 diabetes?,,www.niddk.nih.gov,DESC,DESC:manner
+HI,HI:treatment,ENTY,ENTY:dismed,What medicines do I need to treat my type 2 diabetes?,,www.niddk.nih.gov,DESC,DESC:desc
+HI,HI:complications,ENTY,ENTY:other,What health problems can people with diabetes develop?,,www.niddk.nih.gov,ENTY,ENTY:dismed
+HI,HI:general,DESC,DESC:manner,How can I lower my chances of developing type 2 diabetes?,,www.niddk.nih.gov,DESC,DESC:manner
+HI,HI:diet,ENTY,ENTY:food,What foods can I eat if I have diabetes?,,www.niddk.nih.gov,ENTY,ENTY:food
+HI,HI:diet,ENTY,ENTY:food,What foods and drinks should I limit if I have diabetes?,,www.niddk.nih.gov,ENTY,ENTY:food
+HI,HI:diet,ENTY,ENTY:food,What foods and drinks should I limit if I have diabetes?,,www.niddk.nih.gov,ENTY,ENTY:food
+HI,HI:diet,ENTY,ENTY:other,When should I eat if I have diabetes?,,www.niddk.nih.gov,NUM,NUM:date
+HI,HI:diet,DESC,DESC:manner,How much can I eat if I have diabetes?,,www.niddk.nih.gov,NUM,NUM:count
+HI,HI:diet,DESC,DESC:def,What is medical nutrition therapy?,,www.niddk.nih.gov,ENTY,DESC:def
+HI,HI:diet,DESC,DESC:reason,Will supplements and vitamins help my diabetes?,,www.niddk.nih.gov,DESC,DESC:desc
+HI,HI:diet,DESC,DESC:reason,Why should I be physically active if I have diabetes?,,www.niddk.nih.gov,DESC,DESC:reason
+HI,HI:diet,DESC,DESC:manner,How can I be physically active safely if I have diabetes?,,www.niddk.nih.gov,DESC,DESC:manner
+HI,HI:diet,ENTY,ENTY:other,What physical activities should I do if I have diabetes?,,www.niddk.nih.gov,DESC,DESC:desc
+HI,HI:exam_test,HUM,HUM:ind,Who should be tested for diabetes?,,www.niddk.nih.gov,HUM,HUM:ind
+HI,HI:exam_test,ENTY,ENTY:techmeth,What tests are used to diagnose diabetes and prediabetes?,,www.niddk.nih.gov,DESC,DESC:def
+HI,HI:exam_test,ENTY,ENTY:techmeth,What tests are used to diagnose gestational diabetes?,,www.niddk.nih.gov,DESC,DESC:def
+HI,HI:exam_test,ENTY,ENTY:techmeth,What test numbers tell me if I have diabetes or prediabetes?,,www.niddk.nih.gov,DESC,ENTY:other
+HI,HI:exam_test,ENTY,ENTY:techmeth,Which tests help my health care professional know what kind of diabetes I have?,,www.niddk.nih.gov,DESC,DESC:desc
+HI,HI:symptom,ENTY,ENTY:other,What are the symptoms of diabetes?,,www.niddk.nih.gov,DESC,DESC:desc
+HI,HI:general,ENTY,ENTY:other,What causes type 1 diabetes?,,www.niddk.nih.gov,DESC,DESC:reason
+HI,HI:general,ENTY,ENTY:other,What causes type 2 diabetes?,,www.niddk.nih.gov,DESC,DESC:reason
+HI,HI:general,ENTY,ENTY:other,What causes gestational diabetes?,,www.niddk.nih.gov,DESC,DESC:reason
+HI,HI:general,ENTY,ENTY:other,What else can cause diabetes?,,www.niddk.nih.gov,DESC,DESC:reason
+COM,COM:kidney_disease ,DESC,DESC:reason,"What is the link between diabetes, heart disease, and stroke?",,www.niddk.nih.gov,ENTY,ENTY:dismed
+COM,COM:cardio,DESC,DESC:manner,What else increases my chances of heart disease or stroke if I have diabetes?,,www.niddk.nih.gov,DESC,ENTY:dismed
+COM,COM:cardio,DESC,DESC:manner,How can I lower my chances of a heart attack or stroke if I have diabetes?,,www.niddk.nih.gov,DESC,DESC:manner
+COM,COM:cardio,DESC,DESC:manner,How do doctors diagnose heart disease in diabetes?,,www.niddk.nih.gov,DESC,DESC:manner
+COM,COM:cardio,ENTY,ENTY:other,What are the warning signs of heart attack and stroke?,,www.niddk.nih.gov,ENTY,ENTY:dismed
+HI,HI:exam_test,ENTY,ENTY:techmeth,"What are clinical trials, and are they right for you?",,www.niddk.nih.gov,DESC,DESC:def
+HI,HI:exam_test,ENTY,ENTY:techmeth,What clinical trials are open?,,www.niddk.nih.gov,ENTY,ENTY:event
+COM,COM:kidney_disease ,DESC,DESC:def,What is diabetic kidney disease?,,www.niddk.nih.gov,DESC,DESC:def
+COM,COM:kidney_disease ,ENTY,ENTY:termeq,What are other names for diabetic kidney disease?,,www.niddk.nih.gov,ENTY,ENTY:dismed
+COM,COM:kidney_disease ,DESC,DESC:reason,How does diabetes cause kidney disease?,,www.niddk.nih.gov,DESC,DESC:manner
+COM,COM:kidney_disease ,ENTY,ENTY:other,What increases my chances of developing diabetic kidney disease?,,www.niddk.nih.gov,ENTY,ENTY:dismed
+COM,COM:kidney_disease ,DESC,DESC:manner,How can I tell if I have diabetic kidney disease?,,www.niddk.nih.gov,DESC,DESC:manner
+COM,COM:kidney_disease ,DESC,DESC:manner,How can I keep my kidneys healthy if I have diabetes?,,www.niddk.nih.gov,DESC,DESC:manner
+HI,HI:general,DESC,DESC:manner,How can I cope with the stress of managing my diabetes?,,www.niddk.nih.gov,DESC,DESC:manner
+COM,COM:kidney_disease ,DESC,DESC:reason,Does diabetic kidney disease get worse over time?,,www.niddk.nih.gov,ENTY,ENTY:dismed
+HI,HI:treatment,ENTY,ENTY:techmeth,What medicines might I take for diabetes?,,www.niddk.nih.gov,DESC,DESC:desc
+HI,HI:treatment,ENTY,ENTY:techmeth,What are the different types of insulin?,,www.niddk.nih.gov,ENTY,ENTY:other
+HI,HI:treatment,DESC,DESC:manner,What are the different ways to take insulin?,,www.niddk.nih.gov,ENTY,ENTY:techmeth
+HI,HI:treatment,ENTY,ENTY:techmeth,What oral medicines treat type 2 diabetes?,,www.niddk.nih.gov,DESC,DESC:def
+HI,HI:treatment,ENTY,ENTY:techmeth,What other injectable medicines treat type 2 diabetes?,,www.niddk.nih.gov,DESC,ENTY:dismed
+HI,HI:treatment,ENTY,ENTY:other,What should I know about side effects of diabetes medicines?,,www.niddk.nih.gov,DESC,DESC:desc
+HI,HI:treatment,ENTY,ENTY:techmeth,Do I have other treatment options for my diabetes?,,www.niddk.nih.gov,ENTY,ENTY:dismed
