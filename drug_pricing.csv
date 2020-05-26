@@ -1,18 +1,226 @@
-BMedQA_class,MedQA_subclass,TREC_Class,TREC_Subclass,Question,Named_Entity,source,TRAC_main_pred,TRAC_sub_pred
-DRG,DRG:side_effect,DESC,DESC:manner,How Safe Is Metformin,drug_name:metformin,patientsLikeMe,DESC,DESC:manner
-DRG,DRG:side_effect,ENTY,ENTY:other,Diabetes type 2 / Metformin / Bowel Problems,drug_name:metformin,patientsLikeMe,ENTY,ENTY:other
-DRG,DRG:med_advice,DESC,DESC:desc,I just stared taking Trulicity,drug_name:trulicity,patientsLikeMe,DESC,DESC:desc
-DRG,DRG:med_advice,DESC,DESC:desc,Any body else using glucocil ?,drug_name:glucocil,patientsLikeMe,DESC,ENTY:body
-DRG,DRG:med_advice,DESC,DESC:manner,Metformin,drug_name:metformin,patientsLikeMe,ENTY,ENTY:other
-DRG,DRG:med_advice,DESC,DESC:manner,Metformin: Does it work???,drug_name:metformin,patientsLikeMe,DESC,DESC:desc
-DRG,DRG:side_effect,DESC,DESC:desc,Has anybody that's taking met form in noticed hair loss?,drug_name:metformin,patientsLikeMe,ENTY,ENTY:techmeth
-DRG,DRG:med_advice,DESC,DESC:desc,Insulin added to other type 2 medication,drug_name:insulin,patientsLikeMe,ENTY,ENTY:dismed
-DRG,DRG:med_advice,DESC,DESC:desc,Insulin injection issues,drug_name:insulin,patientsLikeMe,DESC,DESC:desc
-DRG,DRG:med_advice,DESC,DESC:desc,DiabetesType 2 and MTHFR 677T- Has anyone tried Metanx?,drug_name:metanx,patientsLikeMe,HUM,HUM:ind
-DRG,DRG:indication,DESC,DESC:reason,Why is Metformin prescribed?,drug_name:metformin,MedlinePlus,DESC,DESC:reason
-DRG,DRG:use,DESC,DESC:manner,How should Metformin be used?,drug_name:metformin,MedlinePlus,DESC,DESC:manner
-DRG,DRG:use,DESC,DESC:manner,What special precautions should I follow?,ctx:drug_name:metformin,MedlinePlus,ENTY,ENTY:other
-DRG,DRG:use,DESC,DESC:manner,How should Metformin be used?,drug_name:metformin,MedlinePlus,DESC,DESC:manner
-DRG,DRG:interaction,DESC,DESC:manner,What if I take metformin and ranolazine?,"drug_name:metformin, drug_name:ranolazine",,DESC,ENTY:other
-DRG,DRG:interaction,DESC,DESC:manner,Can I drink alcohol with metformin?,"drug_name:metformin,drink:alcohol",,ENTY,ENTY:food
-DRG,DRG:side_effect,DESC,DESC:manner,Does metformin increase cardiovascular risk?,"drug_name:metformin,disease:cardiovascular",,DESC,DESC:def
+MedQA_class,MedQA_subclass,TREC_Class,TREC_Subclass,Question,Named_Entity,source,TRAC_main_pred,TRAC_sub_pred
+DRG,description,,,What is Metformin?,Metformin,,DESC,DESC:def
+DRG,description,,,What is Glucophage?,Glucophage,,DESC,DESC:def
+DRG,description,,,What is Pioglitazone?,Pioglitazone,,DESC,DESC:def
+DRG,description,,,What is Sitagliptin?,Sitagliptin,,DESC,DESC:def
+DRG,description,,,What is Exenatide?,Exenatide,,DESC,DESC:def
+DRG,description,,,What is Sitagliptin-Metformin?,Sitagliptin-Metformin,,DESC,DESC:def
+DRG,description,,,What is Metformin?,Metformin,,DESC,DESC:def
+DRG,description,,,What is Glucophage?,Glucophage,,DESC,DESC:def
+DRG,description,,,What is Insulin ?,Insulin ,,DESC,DESC:def
+DRG,description,,,What is Glargine?,Glargine,,DESC,DESC:def
+DRG,description,,,What is Basaglar?,Basaglar,,DESC,DESC:def
+DRG,description,,,What is Lantus?,Lantus,,DESC,DESC:def
+DRG,description,,,What is Glipizide?,Glipizide,,DESC,DESC:def
+DRG,description,,,What is Glucotrol?,Glucotrol,,DESC,DESC:def
+DRG,description,,,What is Glimepiride?,Glimepiride,,DESC,DESC:def
+DRG,description,,,What is Amaryl?,Amaryl,,DESC,DESC:def
+DRG,description,,,What is Sitagliptin?,Sitagliptin,,DESC,DESC:def
+DRG,description,,,What is Januvia?,Januvia,,DESC,DESC:def
+DRG,description,,,What is lisinopril?,lisinopril,,DESC,DESC:def
+DRG,description,,,What is Alli?,Alli,,DESC,DESC:def
+DRG,description,,,What is simvastatin?,simvastatin,,DESC,DESC:def
+DRG,description,,,What is Procrit Vial?,Procrit Vial,,DESC,DESC:def
+DRG,description,,,What is simvastatin?,simvastatin,,DESC,DESC:def
+DRG,description,,,What is lisinopril Solution?,lisinopril Solution,,DESC,DESC:def
+DRG,description,,,What is orlistat capsule?,orlistat capsule,,DESC,DESC:def
+DRG,contraindication,,,What should I tell my health care provider before I take Metformin?,Metformin,,HUM,ENTY:other
+DRG,contraindication,,,What should I tell my health care provider before I take Glucophage?,Glucophage,,HUM,ENTY:other
+DRG,contraindication,,,What should I tell my health care provider before I take Pioglitazone?,Pioglitazone,,HUM,ENTY:other
+DRG,contraindication,,,What should I tell my health care provider before I take Sitagliptin?,Sitagliptin,,HUM,ENTY:other
+DRG,contraindication,,,What should I tell my health care provider before I take Exenatide?,Exenatide,,HUM,ENTY:other
+DRG,contraindication,,,What should I tell my health care provider before I take Sitagliptin-Metformin?,Sitagliptin-Metformin,,HUM,ENTY:other
+DRG,contraindication,,,What should I tell my health care provider before I take Metformin?,Metformin,,HUM,ENTY:other
+DRG,contraindication,,,What should I tell my health care provider before I take Glucophage?,Glucophage,,HUM,ENTY:other
+DRG,contraindication,,,What should I tell my health care provider before I take Insulin ?,Insulin ,,HUM,ENTY:other
+DRG,contraindication,,,What should I tell my health care provider before I take Glargine?,Glargine,,HUM,ENTY:other
+DRG,contraindication,,,What should I tell my health care provider before I take Basaglar?,Basaglar,,HUM,ENTY:other
+DRG,contraindication,,,What should I tell my health care provider before I take Lantus?,Lantus,,HUM,ENTY:other
+DRG,contraindication,,,What should I tell my health care provider before I take Glipizide?,Glipizide,,HUM,ENTY:other
+DRG,contraindication,,,What should I tell my health care provider before I take Glucotrol?,Glucotrol,,HUM,ENTY:other
+DRG,contraindication,,,What should I tell my health care provider before I take Glimepiride?,Glimepiride,,HUM,ENTY:other
+DRG,contraindication,,,What should I tell my health care provider before I take Amaryl?,Amaryl,,HUM,ENTY:other
+DRG,contraindication,,,What should I tell my health care provider before I take Sitagliptin?,Sitagliptin,,HUM,ENTY:other
+DRG,contraindication,,,What should I tell my health care provider before I take Januvia?,Januvia,,HUM,ENTY:other
+DRG,contraindication,,,What should I tell my health care provider before I take lisinopril?,lisinopril,,HUM,ENTY:other
+DRG,contraindication,,,What should I tell my health care provider before I take Alli?,Alli,,HUM,ENTY:other
+DRG,contraindication,,,What should I tell my health care provider before I take simvastatin?,simvastatin,,HUM,ENTY:other
+DRG,contraindication,,,What should I tell my health care provider before I take Procrit Vial?,Procrit Vial,,HUM,ENTY:other
+DRG,contraindication,,,What should I tell my health care provider before I take simvastatin?,simvastatin,,HUM,ENTY:other
+DRG,contraindication,,,What should I tell my health care provider before I take lisinopril Solution?,lisinopril Solution,,HUM,ENTY:other
+DRG,contraindication,,,What should I tell my health care provider before I take orlistat capsule?,orlistat capsule,,HUM,ENTY:other
+DRG,administration,,,How should I use this Metformin?,Metformin,,DESC,DESC:manner
+DRG,administration,,,How should I use this Glucophage?,Glucophage,,DESC,DESC:manner
+DRG,administration,,,How should I use this Pioglitazone?,Pioglitazone,,DESC,DESC:manner
+DRG,administration,,,How should I use this Sitagliptin?,Sitagliptin,,DESC,DESC:manner
+DRG,administration,,,How should I use this Exenatide?,Exenatide,,DESC,DESC:manner
+DRG,administration,,,How should I use this Sitagliptin-Metformin?,Sitagliptin-Metformin,,DESC,DESC:manner
+DRG,administration,,,How should I use this Metformin?,Metformin,,DESC,DESC:manner
+DRG,administration,,,How should I use this Glucophage?,Glucophage,,DESC,DESC:manner
+DRG,administration,,,How should I use this Insulin ?,Insulin ,,DESC,DESC:manner
+DRG,administration,,,How should I use this Glargine?,Glargine,,DESC,DESC:manner
+DRG,administration,,,How should I use this Basaglar?,Basaglar,,DESC,DESC:manner
+DRG,administration,,,How should I use this Lantus?,Lantus,,DESC,DESC:manner
+DRG,administration,,,How should I use this Glipizide?,Glipizide,,DESC,DESC:manner
+DRG,administration,,,How should I use this Glucotrol?,Glucotrol,,DESC,DESC:manner
+DRG,administration,,,How should I use this Glimepiride?,Glimepiride,,DESC,DESC:manner
+DRG,administration,,,How should I use this Amaryl?,Amaryl,,DESC,DESC:manner
+DRG,administration,,,How should I use this Sitagliptin?,Sitagliptin,,DESC,DESC:manner
+DRG,administration,,,How should I use this Januvia?,Januvia,,DESC,DESC:manner
+DRG,administration,,,How should I use this lisinopril?,lisinopril,,DESC,DESC:manner
+DRG,administration,,,How should I use this Alli?,Alli,,DESC,DESC:manner
+DRG,administration,,,How should I use this simvastatin?,simvastatin,,DESC,DESC:manner
+DRG,administration,,,How should I use this Procrit Vial?,Procrit Vial,,DESC,DESC:manner
+DRG,administration,,,How should I use this simvastatin?,simvastatin,,DESC,DESC:manner
+DRG,administration,,,How should I use this lisinopril Solution?,lisinopril Solution,,DESC,DESC:manner
+DRG,administration,,,How should I use this orlistat capsule?,orlistat capsule,,DESC,DESC:manner
+DRG,missedDose,,,What if I miss a dose of Metformin?,Metformin,,ENTY,ENTY:other
+DRG,missedDose,,,What if I miss a dose of Glucophage?,Glucophage,,ENTY,ENTY:other
+DRG,missedDose,,,What if I miss a dose of Pioglitazone?,Pioglitazone,,ENTY,ENTY:other
+DRG,missedDose,,,What if I miss a dose of Sitagliptin?,Sitagliptin,,ENTY,ENTY:other
+DRG,missedDose,,,What if I miss a dose of Exenatide?,Exenatide,,ENTY,ENTY:other
+DRG,missedDose,,,What if I miss a dose of Sitagliptin-Metformin?,Sitagliptin-Metformin,,ENTY,ENTY:other
+DRG,missedDose,,,What if I miss a dose of Metformin?,Metformin,,ENTY,ENTY:other
+DRG,missedDose,,,What if I miss a dose of Glucophage?,Glucophage,,ENTY,ENTY:other
+DRG,missedDose,,,What if I miss a dose of Insulin ?,Insulin ,,ENTY,ENTY:other
+DRG,missedDose,,,What if I miss a dose of Glargine?,Glargine,,ENTY,ENTY:other
+DRG,missedDose,,,What if I miss a dose of Basaglar?,Basaglar,,ENTY,ENTY:other
+DRG,missedDose,,,What if I miss a dose of Lantus?,Lantus,,ENTY,ENTY:other
+DRG,missedDose,,,What if I miss a dose of Glipizide?,Glipizide,,ENTY,ENTY:other
+DRG,missedDose,,,What if I miss a dose of Glucotrol?,Glucotrol,,ENTY,ENTY:other
+DRG,missedDose,,,What if I miss a dose of Glimepiride?,Glimepiride,,ENTY,ENTY:other
+DRG,missedDose,,,What if I miss a dose of Amaryl?,Amaryl,,ENTY,ENTY:other
+DRG,missedDose,,,What if I miss a dose of Sitagliptin?,Sitagliptin,,ENTY,ENTY:other
+DRG,missedDose,,,What if I miss a dose of Januvia?,Januvia,,ENTY,ENTY:other
+DRG,missedDose,,,What if I miss a dose of lisinopril?,lisinopril,,ENTY,ENTY:other
+DRG,missedDose,,,What if I miss a dose of Alli?,Alli,,ENTY,ENTY:other
+DRG,missedDose,,,What if I miss a dose of simvastatin?,simvastatin,,ENTY,ENTY:other
+DRG,missedDose,,,What if I miss a dose of Procrit Vial?,Procrit Vial,,ENTY,ENTY:other
+DRG,missedDose,,,What if I miss a dose of simvastatin?,simvastatin,,ENTY,ENTY:other
+DRG,missedDose,,,What if I miss a dose of lisinopril Solution?,lisinopril Solution,,ENTY,ENTY:other
+DRG,missedDose,,,What if I miss a dose of orlistat capsule?,orlistat capsule,,ENTY,ENTY:other
+DRG,interactions,,,What may interact with Metformin?,Metformin,,DESC,DESC:def
+DRG,interactions,,,What may interact with Glucophage?,Glucophage,,DESC,DESC:def
+DRG,interactions,,,What may interact with Pioglitazone?,Pioglitazone,,DESC,DESC:def
+DRG,interactions,,,What may interact with Sitagliptin?,Sitagliptin,,DESC,DESC:def
+DRG,interactions,,,What may interact with Exenatide?,Exenatide,,DESC,DESC:def
+DRG,interactions,,,What may interact with Sitagliptin-Metformin?,Sitagliptin-Metformin,,DESC,DESC:def
+DRG,interactions,,,What may interact with Metformin?,Metformin,,DESC,DESC:def
+DRG,interactions,,,What may interact with Glucophage?,Glucophage,,DESC,DESC:def
+DRG,interactions,,,What may interact with Insulin ?,Insulin ,,DESC,DESC:def
+DRG,interactions,,,What may interact with Glargine?,Glargine,,DESC,DESC:def
+DRG,interactions,,,What may interact with Basaglar?,Basaglar,,DESC,DESC:def
+DRG,interactions,,,What may interact with Lantus?,Lantus,,DESC,DESC:def
+DRG,interactions,,,What may interact with Glipizide?,Glipizide,,DESC,DESC:def
+DRG,interactions,,,What may interact with Glucotrol?,Glucotrol,,DESC,DESC:def
+DRG,interactions,,,What may interact with Glimepiride?,Glimepiride,,DESC,DESC:def
+DRG,interactions,,,What may interact with Amaryl?,Amaryl,,DESC,DESC:def
+DRG,interactions,,,What may interact with Sitagliptin?,Sitagliptin,,DESC,DESC:def
+DRG,interactions,,,What may interact with Januvia?,Januvia,,DESC,DESC:def
+DRG,interactions,,,What may interact with lisinopril?,lisinopril,,DESC,DESC:def
+DRG,interactions,,,What may interact with Alli?,Alli,,DESC,DESC:def
+DRG,interactions,,,What may interact with simvastatin?,simvastatin,,DESC,DESC:def
+DRG,interactions,,,What may interact with Procrit Vial?,Procrit Vial,,DESC,DESC:def
+DRG,interactions,,,What may interact with simvastatin?,simvastatin,,DESC,DESC:def
+DRG,interactions,,,What may interact with lisinopril Solution?,lisinopril Solution,,DESC,DESC:def
+DRG,interactions,,,What may interact with orlistat capsule?,orlistat capsule,,DESC,DESC:def
+DRG,side_effects,,,What side effects may I notice from receiving Metformin?,Metformin,,DESC,DESC:desc
+DRG,side_effects,,,What side effects may I notice from receiving Glucophage?,Glucophage,,DESC,DESC:desc
+DRG,side_effects,,,What side effects may I notice from receiving Pioglitazone?,Pioglitazone,,DESC,DESC:desc
+DRG,side_effects,,,What side effects may I notice from receiving Sitagliptin?,Sitagliptin,,DESC,DESC:desc
+DRG,side_effects,,,What side effects may I notice from receiving Exenatide?,Exenatide,,DESC,DESC:desc
+DRG,side_effects,,,What side effects may I notice from receiving Sitagliptin-Metformin?,Sitagliptin-Metformin,,DESC,DESC:desc
+DRG,side_effects,,,What side effects may I notice from receiving Metformin?,Metformin,,DESC,DESC:desc
+DRG,side_effects,,,What side effects may I notice from receiving Glucophage?,Glucophage,,DESC,DESC:desc
+DRG,side_effects,,,What side effects may I notice from receiving Insulin ?,Insulin ,,DESC,DESC:desc
+DRG,side_effects,,,What side effects may I notice from receiving Glargine?,Glargine,,DESC,DESC:desc
+DRG,side_effects,,,What side effects may I notice from receiving Basaglar?,Basaglar,,DESC,DESC:desc
+DRG,side_effects,,,What side effects may I notice from receiving Lantus?,Lantus,,DESC,DESC:desc
+DRG,side_effects,,,What side effects may I notice from receiving Glipizide?,Glipizide,,DESC,DESC:desc
+DRG,side_effects,,,What side effects may I notice from receiving Glucotrol?,Glucotrol,,DESC,DESC:desc
+DRG,side_effects,,,What side effects may I notice from receiving Glimepiride?,Glimepiride,,DESC,DESC:desc
+DRG,side_effects,,,What side effects may I notice from receiving Amaryl?,Amaryl,,DESC,DESC:desc
+DRG,side_effects,,,What side effects may I notice from receiving Sitagliptin?,Sitagliptin,,DESC,DESC:desc
+DRG,side_effects,,,What side effects may I notice from receiving Januvia?,Januvia,,DESC,DESC:desc
+DRG,side_effects,,,What side effects may I notice from receiving lisinopril?,lisinopril,,DESC,DESC:desc
+DRG,side_effects,,,What side effects may I notice from receiving Alli?,Alli,,DESC,DESC:desc
+DRG,side_effects,,,What side effects may I notice from receiving simvastatin?,simvastatin,,DESC,DESC:desc
+DRG,side_effects,,,What side effects may I notice from receiving Procrit Vial?,Procrit Vial,,DESC,DESC:desc
+DRG,side_effects,,,What side effects may I notice from receiving simvastatin?,simvastatin,,DESC,DESC:desc
+DRG,side_effects,,,What side effects may I notice from receiving lisinopril Solution?,lisinopril Solution,,DESC,DESC:desc
+DRG,side_effects,,,What side effects may I notice from receiving orlistat capsule?,orlistat capsule,,DESC,DESC:desc
+DRG,storage,,,Where should I keep Metformin?,Metformin,,LOC,LOC:other
+DRG,storage,,,Where should I keep Glucophage?,Glucophage,,LOC,LOC:other
+DRG,storage,,,Where should I keep Pioglitazone?,Pioglitazone,,LOC,LOC:other
+DRG,storage,,,Where should I keep Sitagliptin?,Sitagliptin,,LOC,LOC:other
+DRG,storage,,,Where should I keep Exenatide?,Exenatide,,LOC,LOC:other
+DRG,storage,,,Where should I keep Sitagliptin-Metformin?,Sitagliptin-Metformin,,LOC,LOC:other
+DRG,storage,,,Where should I keep Metformin?,Metformin,,LOC,LOC:other
+DRG,storage,,,Where should I keep Glucophage?,Glucophage,,LOC,LOC:other
+DRG,storage,,,Where should I keep Insulin ?,Insulin ,,LOC,LOC:other
+DRG,storage,,,Where should I keep Glargine?,Glargine,,LOC,LOC:other
+DRG,storage,,,Where should I keep Basaglar?,Basaglar,,LOC,LOC:other
+DRG,storage,,,Where should I keep Lantus?,Lantus,,LOC,LOC:other
+DRG,storage,,,Where should I keep Glipizide?,Glipizide,,LOC,LOC:other
+DRG,storage,,,Where should I keep Glucotrol?,Glucotrol,,LOC,LOC:other
+DRG,storage,,,Where should I keep Glimepiride?,Glimepiride,,LOC,LOC:other
+DRG,storage,,,Where should I keep Amaryl?,Amaryl,,LOC,LOC:other
+DRG,storage,,,Where should I keep Sitagliptin?,Sitagliptin,,LOC,LOC:other
+DRG,storage,,,Where should I keep Januvia?,Januvia,,LOC,LOC:other
+DRG,storage,,,Where should I keep lisinopril?,lisinopril,,LOC,LOC:other
+DRG,storage,,,Where should I keep Alli?,Alli,,LOC,LOC:other
+DRG,storage,,,Where should I keep simvastatin?,simvastatin,,LOC,LOC:other
+DRG,storage,,,Where should I keep Procrit Vial?,Procrit Vial,,LOC,LOC:other
+DRG,storage,,,Where should I keep simvastatin?,simvastatin,,LOC,LOC:other
+DRG,storage,,,Where should I keep lisinopril Solution?,lisinopril Solution,,LOC,LOC:other
+DRG,storage,,,Where should I keep orlistat capsule?,orlistat capsule,,LOC,LOC:other
+PRC,where,,,Where I can find Metformin?,Metformin,,LOC,LOC:other
+PRC,where,,,Where I can find Glucophage?,Glucophage,,LOC,LOC:other
+PRC,where,,,Where I can find Pioglitazone?,Pioglitazone,,LOC,LOC:other
+PRC,where,,,Where I can find Sitagliptin?,Sitagliptin,,LOC,LOC:other
+PRC,where,,,Where I can find Exenatide?,Exenatide,,LOC,LOC:other
+PRC,where,,,Where I can find Sitagliptin-Metformin?,Sitagliptin-Metformin,,LOC,LOC:other
+PRC,where,,,Where I can find Metformin?,Metformin,,LOC,LOC:other
+PRC,where,,,Where I can find Glucophage?,Glucophage,,LOC,LOC:other
+PRC,where,,,Where I can find Insulin ?,Insulin ,,LOC,LOC:other
+PRC,where,,,Where I can find Glargine?,Glargine,,LOC,LOC:other
+PRC,where,,,Where I can find Basaglar?,Basaglar,,LOC,LOC:other
+PRC,where,,,Where I can find Lantus?,Lantus,,LOC,LOC:other
+PRC,where,,,Where I can find Glipizide?,Glipizide,,LOC,LOC:other
+PRC,where,,,Where I can find Glucotrol?,Glucotrol,,LOC,LOC:other
+PRC,where,,,Where I can find Glimepiride?,Glimepiride,,LOC,LOC:other
+PRC,where,,,Where I can find Amaryl?,Amaryl,,LOC,LOC:other
+PRC,where,,,Where I can find Sitagliptin?,Sitagliptin,,LOC,LOC:other
+PRC,where,,,Where I can find Januvia?,Januvia,,LOC,LOC:other
+PRC,where,,,Where I can find lisinopril?,lisinopril,,LOC,LOC:other
+PRC,where,,,Where I can find Alli?,Alli,,LOC,LOC:other
+PRC,where,,,Where I can find simvastatin?,simvastatin,,LOC,LOC:other
+PRC,where,,,Where I can find Procrit Vial?,Procrit Vial,,LOC,LOC:other
+PRC,where,,,Where I can find simvastatin?,simvastatin,,LOC,LOC:other
+PRC,where,,,Where I can find lisinopril Solution?,lisinopril Solution,,LOC,LOC:other
+PRC,where,,,Where I can find orlistat capsule?,orlistat capsule,,LOC,LOC:other
+PRC,price,,,How much cost Metformin?,Metformin,,NUM,NUM:money
+PRC,price,,,How much cost Glucophage?,Glucophage,,NUM,NUM:money
+PRC,price,,,How much cost Pioglitazone?,Pioglitazone,,NUM,NUM:money
+PRC,price,,,How much cost Sitagliptin?,Sitagliptin,,NUM,NUM:money
+PRC,price,,,How much cost Exenatide?,Exenatide,,NUM,NUM:money
+PRC,price,,,How much cost Sitagliptin-Metformin?,Sitagliptin-Metformin,,NUM,NUM:money
+PRC,price,,,How much cost Metformin?,Metformin,,NUM,NUM:money
+PRC,price,,,How much cost Glucophage?,Glucophage,,NUM,NUM:money
+PRC,price,,,How much cost Insulin ?,Insulin ,,NUM,NUM:money
+PRC,price,,,How much cost Glargine?,Glargine,,NUM,NUM:money
+PRC,price,,,How much cost Basaglar?,Basaglar,,NUM,NUM:money
+PRC,price,,,How much cost Lantus?,Lantus,,NUM,NUM:money
+PRC,price,,,How much cost Glipizide?,Glipizide,,NUM,NUM:money
+PRC,price,,,How much cost Glucotrol?,Glucotrol,,NUM,NUM:money
+PRC,price,,,How much cost Glimepiride?,Glimepiride,,NUM,NUM:money
+PRC,price,,,How much cost Amaryl?,Amaryl,,NUM,NUM:money
+PRC,price,,,How much cost Sitagliptin?,Sitagliptin,,NUM,NUM:money
+PRC,price,,,How much cost Januvia?,Januvia,,NUM,NUM:money
+PRC,price,,,How much cost lisinopril?,lisinopril,,NUM,NUM:money
+PRC,price,,,How much cost Alli?,Alli,,NUM,NUM:money
+PRC,price,,,How much cost simvastatin?,simvastatin,,NUM,NUM:money
+PRC,price,,,How much cost Procrit Vial?,Procrit Vial,,NUM,NUM:money
+PRC,price,,,How much cost simvastatin?,simvastatin,,NUM,NUM:money
+PRC,price,,,How much cost lisinopril Solution?,lisinopril Solution,,NUM,NUM:money
+PRC,price,,,How much cost orlistat capsule?,orlistat capsule,,NUM,NUM:money
